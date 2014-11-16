@@ -1,4 +1,4 @@
-package com.example.krutonix.bisnode;
+package app.com.bisnode;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
