@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
 import app.com.bisnode.adapters.SearchAdapter;
+import app.com.bisnode.tablisteners.SearchItemOnClickListener;
 
 public class SearchFragment extends PlaceHolderFragment {
 
@@ -50,6 +51,7 @@ public class SearchFragment extends PlaceHolderFragment {
                 lis.add("nene");
                 ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.list_item, lis);
                 expListView.setAdapter(listAdapter);
+                expListView.setOnClickListener(new SearchItemOnClickListener());
             }
         });
         return rootView;
