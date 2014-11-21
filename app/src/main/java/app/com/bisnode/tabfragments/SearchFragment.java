@@ -51,7 +51,7 @@ public class SearchFragment extends PlaceHolderFragment {
                 lis.add("nene");
                 ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.list_item, lis);
                 expListView.setAdapter(listAdapter);
-                expListView.setOnClickListener(new SearchItemOnClickListener());
+                expListView.setOnItemClickListener(new SearchItemOnClickListener());
             }
         });
         return rootView;

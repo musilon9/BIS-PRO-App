@@ -1,11 +1,13 @@
 package app.com.bisnode.tablisteners;
 
 import android.view.View;
+import android.widget.AdapterView;
 
 
-public class SearchItemOnClickListener implements View.OnClickListener{
+public class SearchItemOnClickListener implements AdapterView.OnItemClickListener{
+
     @Override
-    public void onClick(View v) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
 }
