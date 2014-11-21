@@ -9,6 +9,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,8 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import app.com.bisnode.tabfragments.FavouriteFragment;
+import app.com.bisnode.tabfragments.HistoryFragment;
+import app.com.bisnode.tabfragments.SearchFragment;
+import app.com.bisnode.tablisteners.FavouriteListener;
+import app.com.bisnode.tablisteners.HistoryListener;
+import app.com.bisnode.tablisteners.SearchListener;
 
-public class MainActivity extends Activity {
+
+public class MainActivity extends FragmentActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -50,6 +58,39 @@ public class MainActivity extends Activity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        displayTabs();
+    }
+
+    private void displayTabs() {
+        final ActionBar actionBar = getActionBar();
+
+        // Specify that tabs should be displayed in the action bar.
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        // Add 3 tabs, specifying the tab's text and TabListener
+        for (int i = 0; i < 3; i++) {
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText(mSectionsPagerAdapter.getPageTitle(i))
+                            .setTabListener(getTabListener(i)));
+        }
+    }
+
+    private ActionBar.TabListener getTabListener(int i) {
+        ActionBar.TabListener listener = null;
+        switch (i) {
+            case 0 :
+                listener = new FavouriteListener(mViewPager);
+                break;
+            case 1 :
+                listener = new HistoryListener(mViewPager);
+                break;
+            case 2 :
+                listener = new SearchListener(mViewPager);
+                break;
+        }
+
+        return listener;
     }
 
 
@@ -88,9 +129,19 @@ public class MainActivity extends Activity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            Fragment actualFragment = null;
+            switch (position) {
+                case 0:
+                    actualFragment = FavouriteFragment.newInstance(position + 1);
+                    break;
+                case 1:
+                    actualFragment = HistoryFragment.newInstance(position + 1);
+                    break;
+                case 2:
+                    actualFragment =  SearchFragment.newInstance(position + 1);
+                    break;
+            }
+            return actualFragment;
         }
 
         @Override
@@ -114,37 +165,5 @@ public class MainActivity extends Activity {
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-    }
 
 }
