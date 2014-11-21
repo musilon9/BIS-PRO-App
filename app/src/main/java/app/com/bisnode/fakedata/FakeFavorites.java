@@ -1,5 +1,9 @@
 package app.com.bisnode.fakedata;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import app.com.bisnode.objects.Company;
 
 /**
@@ -18,4 +22,6 @@ public class FakeFavorites {
             new Company("TROMA, spol. s r.o.", "Žďár nad Sázavou"),
             new Company("TĚSNOHLÍDEK s.r.o.", "Prahatice")
     };
+
+    public static List<Company> list = Arrays.asList(array);
 }

@@ -12,13 +12,13 @@ public class Company {
 
     // BASIC INFO
     private String name;
-    private int IC;
+    private String IC;
     private String DIC;
 
     // CONTACT INFO
-    private String address, city, zip;
-    private long phoneNumber;
-    private String email;
+    private String address, city, zip, state;
+    private ArrayList<String> phoneNumbers;
+    private ArrayList<String> emails;
     private String webAddress;
 
     // DETAILS TODO financial analysis fields
@@ -39,8 +39,8 @@ public class Company {
         this.city = city;
     }
 
-    public Company(String name, int IC, String DIC, String address, String city, String zip,
-                   long phoneNumber, String email, String webAddress, ArrayList<String> activities,
+    public Company(String name, String IC, String DIC, String address, String city, String zip, String state,
+                   ArrayList<String> phoneNumbers, ArrayList<String> emails, String webAddress, ArrayList<String> activities,
                    ArrayList<Person> management, HashMap<Integer, Integer> turnover,
                    HashMap<Integer, Integer> employees, Scoring scoring, int paymentIndex,
                    ArrayList<NegativeIndicator> negatives) {
@@ -50,8 +50,9 @@ public class Company {
         this.address = address;
         this.city = city;
         this.zip = zip;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
+        this.state = state;
+        this.phoneNumbers = phoneNumbers;
+        this.emails = emails;
         this.webAddress = webAddress;
         this.activities = activities;
         this.management = management;
@@ -72,7 +73,7 @@ public class Company {
         return name;
     }
 
-    public int getIC() {
+    public String getIC() {
         return IC;
     }
 
@@ -92,12 +93,12 @@ public class Company {
         return zip;
     }
 
-    public long getPhoneNumber() {
-        return phoneNumber;
+    public ArrayList<String> getPhoneNumbers() {
+        return phoneNumbers;
     }
 
-    public String getEmail() {
-        return email;
+    public ArrayList<String> getEmails() {
+        return emails;
     }
 
     public String getWebAddress() {
