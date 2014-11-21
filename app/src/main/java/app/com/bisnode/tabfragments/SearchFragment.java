@@ -46,7 +46,7 @@ public class SearchFragment extends PlaceHolderFragment {
             @Override
             public void onClick(View v)
             {
-                ((EditText) rootView.findViewById(R.id.searchField)).setText("aaaa");
+                ((EditText) rootView.findViewById(R.id.searchField)).setText("madeta");
                 ListView expListView = (ListView) rootView.findViewById(R.id.listView);
                 ArrayList<String> lis = new ArrayList<String>();
                 //lis.add("ahoj");
