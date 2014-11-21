@@ -80,13 +80,13 @@ public class MainActivity extends FragmentActivity {
         ActionBar.TabListener listener = null;
         switch (i) {
             case 0 :
-                listener = new FavouriteListener(mViewPager);
+                listener = new SearchListener(mViewPager);
                 break;
             case 1 :
                 listener = new HistoryListener(mViewPager);
                 break;
             case 2 :
-                listener = new SearchListener(mViewPager);
+                listener = new FavouriteListener(mViewPager);
                 break;
         }
 
@@ -132,13 +132,13 @@ public class MainActivity extends FragmentActivity {
             Fragment actualFragment = null;
             switch (position) {
                 case 0:
-                    actualFragment = FavouriteFragment.newInstance(position + 1);
+                    actualFragment = SearchFragment.newInstance(position + 1);
                     break;
                 case 1:
                     actualFragment = HistoryFragment.newInstance(position + 1);
                     break;
                 case 2:
-                    actualFragment =  SearchFragment.newInstance(position + 1);
+                    actualFragment =  FavouriteFragment.newInstance(position + 1);
                     break;
             }
             return actualFragment;
@@ -155,11 +155,11 @@ public class MainActivity extends FragmentActivity {
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
+                    return getString(R.string.search).toUpperCase(l);
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
+                    return getString(R.string.history).toUpperCase(l);
                 case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
+                    return getString(R.string.favourite).toUpperCase(l);
             }
             return null;
         }
