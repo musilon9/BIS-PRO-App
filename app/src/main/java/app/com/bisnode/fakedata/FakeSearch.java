@@ -25,7 +25,12 @@ public class FakeSearch {
             new Company("MADETA a.s., závod Prachatice", "Prachatice"),
     };
 
-    public static List<Company> list = Arrays.asList(array);
+    public static ArrayList<Company> list = new ArrayList<Company>();
+
+    public static void init() {
+        for (Company c: array) list.add(c);
+        addExample();
+    }
 
     public static void addExample() {
         String name = "MADETA a. s.";

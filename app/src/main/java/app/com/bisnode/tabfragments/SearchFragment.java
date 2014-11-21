@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
 import app.com.bisnode.adapters.SearchAdapter;
+import app.com.bisnode.fakedata.FakeSearch;
+import app.com.bisnode.objects.Company;
 import app.com.bisnode.tablisteners.SearchItemOnClickListener;
 
 public class SearchFragment extends PlaceHolderFragment {
@@ -47,8 +49,10 @@ public class SearchFragment extends PlaceHolderFragment {
                 ((EditText) rootView.findViewById(R.id.searchField)).setText("aaaa");
                 ListView expListView = (ListView) rootView.findViewById(R.id.listView);
                 ArrayList<String> lis = new ArrayList<String>();
-                lis.add("ahoj");
-                lis.add("nene");
+                //lis.add("ahoj");
+                //lis.add("nene");
+                FakeSearch.init();
+                for (Company comp: FakeSearch.list) lis.add(comp.getName());
                 ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.list_item, lis);
                 expListView.setAdapter(listAdapter);
                 expListView.setOnItemClickListener(new SearchItemOnClickListener());
