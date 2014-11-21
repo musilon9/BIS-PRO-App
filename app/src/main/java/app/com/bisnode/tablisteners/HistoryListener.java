@@ -2,7 +2,6 @@ package app.com.bisnode.tablisteners;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 
