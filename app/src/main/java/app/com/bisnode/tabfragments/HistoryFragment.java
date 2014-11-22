@@ -5,8 +5,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
+import java.util.List;
+
+import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
+import app.com.bisnode.adapters.CompanyModel;
+import app.com.bisnode.adapters.SearchAdapter;
+import app.com.bisnode.fakedata.FakeHistory;
+import app.com.bisnode.utils.ModelUtils;
 
 public class HistoryFragment extends PlaceHolderFragment {
 
@@ -29,6 +38,10 @@ public class HistoryFragment extends PlaceHolderFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.history_fragment, container, false);
+        ListView expListView = (ListView) rootView.findViewById(R.id.historyListView);
+        List<CompanyModel> list = ModelUtils.convertCompanyToCompanyModel(FakeHistory.list);
+        ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.favourite_list_item, list);
+        expListView.setAdapter(listAdapter);
         return rootView;
     }
 
