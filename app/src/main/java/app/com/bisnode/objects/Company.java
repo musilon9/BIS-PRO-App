@@ -3,9 +3,6 @@ package app.com.bisnode.objects;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by Ondra on 19.11.2014.
- */
 public class Company {
 
     public static final int ADDRESS_FIELDS = 3;

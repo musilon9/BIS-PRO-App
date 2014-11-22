@@ -1,19 +1,13 @@
 package app.com.bisnode.fakedata;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 import app.com.bisnode.objects.Company;
 import app.com.bisnode.objects.NegativeIndicator;
 import app.com.bisnode.objects.Person;
 import app.com.bisnode.objects.Scoring;
 
-/**
- * Created by Ondra on 21.11.2014.
- */
 public class FakeSearch {
     public static Company[] array = new Company[] {
             new Company("MADETA Agro a. s.", "České Budějovice"),

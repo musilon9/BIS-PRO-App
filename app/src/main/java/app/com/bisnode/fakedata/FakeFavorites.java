@@ -1,14 +1,10 @@
 package app.com.bisnode.fakedata;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import app.com.bisnode.objects.Company;
 
-/**
- * Created by Ondra on 21.11.2014.
- */
 public class FakeFavorites {
 
     public static Company[] array = new Company[] {
