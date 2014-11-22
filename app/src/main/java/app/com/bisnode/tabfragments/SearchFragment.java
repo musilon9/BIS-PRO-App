@@ -10,15 +10,15 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
 import app.com.bisnode.adapters.CompanyModel;
 import app.com.bisnode.adapters.SearchAdapter;
 import app.com.bisnode.fakedata.FakeSearch;
-import app.com.bisnode.objects.Company;
 import app.com.bisnode.tablisteners.SearchItemOnClickListener;
+import app.com.bisnode.utils.ModelUtils;
 
 public class SearchFragment extends PlaceHolderFragment {
 
@@ -49,16 +49,7 @@ public class SearchFragment extends PlaceHolderFragment {
             {
                 ((EditText) rootView.findViewById(R.id.searchField)).setText("madeta");
                 ListView expListView = (ListView) rootView.findViewById(R.id.listView);
-                ArrayList<CompanyModel> lis = new ArrayList<CompanyModel>();
-                //lis.add("ahoj");
-                //lis.add("nene");
-                FakeSearch.init();
-                int i = 0;
-                for (Company comp: FakeSearch.list) {
-                    CompanyModel companyModel = new CompanyModel(i, R.drawable.osvc, comp.getName(), comp.getCity());
-                    lis.add(companyModel);
-                }
-
+                List<CompanyModel> lis = ModelUtils.convertCompanyToCompanyModel(FakeSearch.list);
                 ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.list_item, lis);
                 expListView.setAdapter(listAdapter);
                 expListView.setOnItemClickListener(new SearchItemOnClickListener());

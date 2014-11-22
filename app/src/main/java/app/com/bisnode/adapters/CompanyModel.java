@@ -8,15 +8,11 @@ public class CompanyModel {
     private String name;
     private String location;
 
-    public CompanyModel(int it, int icon, String name, String location) {
+    public CompanyModel(int id, int icon, String name, String location) {
         this.id = id;
         this.icon = icon;
         this.name = name;
         this.location = location;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public int getIcon() {
@@ -29,5 +25,25 @@ public class CompanyModel {
 
     public String getLocation() {
         return location;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CompanyModel that = (CompanyModel) o;
+
+        return id == that.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 }

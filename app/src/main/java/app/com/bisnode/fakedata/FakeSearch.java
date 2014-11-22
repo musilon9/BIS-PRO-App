@@ -1,8 +1,8 @@
 package app.com.bisnode.fakedata;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-
 import app.com.bisnode.objects.Company;
 import app.com.bisnode.objects.NegativeIndicator;
 import app.com.bisnode.objects.Person;
@@ -21,9 +21,9 @@ public class FakeSearch {
 
     public static ArrayList<Company> list = new ArrayList<Company>();
 
-    public static void init() {
+    static {
         list.clear();
-        for (Company c: array) list.add(c);
+        Collections.addAll(list, array);
         addExample();
     }
 

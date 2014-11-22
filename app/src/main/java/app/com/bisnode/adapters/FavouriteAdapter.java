@@ -14,27 +14,36 @@ import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
 
 
-public class SearchAdapter extends ArrayAdapter<CompanyModel> {
+public class FavouriteAdapter extends ArrayAdapter<CompanyModel> {
 
-    public SearchAdapter(Context context, int resource, List<CompanyModel> companyModels) {
+    public FavouriteAdapter(Context context, int resource, List<CompanyModel> companyModels) {
         super(context, resource, companyModels);
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
         if(rowView == null) {
-            rowView = LayoutInflater.from(MyApplication.getAppContext()).inflate(R.layout.list_item, null);
+            rowView = LayoutInflater.from(this.getContext()).inflate(R.layout.favourite_list_item, null);
         }
-        CompanyModel companyModel = getItem(position);
-
-        ImageView icon = (ImageView) rowView.findViewById(R.id.item_icon);
-        icon.setImageResource(companyModel.getIcon());
+        final CompanyModel companyModel = getItem(position);
         TextView title = (TextView) rowView.findViewById(R.id.item_title);
         TextView location = (TextView) rowView.findViewById(R.id.item_location);
-
         title.setText(companyModel.getName());
         location.setText(companyModel.getLocation());
+        ImageView image = (ImageView) rowView.findViewById(R.id.favourite_icon);
+        image.setClickable(true);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remove(companyModel);
+            }
+        });
         return rowView;
     }
+
+    public void delete(int pos) {
+
+    }
+
 
 }
