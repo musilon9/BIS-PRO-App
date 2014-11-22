@@ -22,6 +22,7 @@ public class FakeSearch {
     public static ArrayList<Company> list = new ArrayList<Company>();
 
     public static void init() {
+        list.clear();
         for (Company c: array) list.add(c);
         addExample();
     }
