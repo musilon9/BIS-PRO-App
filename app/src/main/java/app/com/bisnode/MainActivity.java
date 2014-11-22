@@ -72,9 +72,25 @@ public class MainActivity extends FragmentActivity {
         for (int i = 0; i < 3; i++) {
             actionBar.addTab(
                     actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i))
+                            .setIcon(getIconId(i))
                             .setTabListener(getTabListener(i)));
         }
+    }
+
+    private int getIconId(int i) {
+        int id = 0;
+        switch (i) {
+            case 0:
+                id = R.drawable.ic_action_search;
+                break;
+            case 1:
+                id = R.drawable.ic_action_time;
+                break;
+            case 2:
+                id = R.drawable.ic_action_favorite;
+                break;
+        }
+        return id;
     }
 
     private ActionBar.TabListener getTabListener(int i) {
