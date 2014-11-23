@@ -11,6 +11,9 @@
 
     <string name="ico_label">IČO:</string>
     <string name="dic_label">DIČ:</string>
+    <string name="phone_label">TELEFON</string>
+    <string name="email_label">E-MAIL</string>
+    <string name="web_label">WEB</string>
 
     <string name="address_sectionTitle">Sídlo firmy</string>
 

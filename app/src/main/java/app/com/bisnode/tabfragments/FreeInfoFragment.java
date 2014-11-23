@@ -54,7 +54,20 @@ public class FreeInfoFragment extends PlaceHolderFragment {
     }
 
     private void setSectorCContent(View v, Company com) {
-
+        TextView phone = (TextView) v.findViewById(R.id.phoneNumbers);
+        String phoneNumbers = "";
+        for (int i = 0; i < com.getPhoneNumbers().size(); i++) {
+            phoneNumbers += (i == 0 ? "" : "\n") + com.getPhoneNumbers().get(i);
+        }
+        phone.setText(phoneNumbers);
+        TextView email = (TextView) v.findViewById(R.id.emailAddresses);
+        String emails = "";
+        for (int i = 0; i < com.getEmails().size(); i++) {
+            emails += (i == 0 ? "" : "\n") + com.getEmails().get(i);
+        }
+        email.setText(emails);
+        TextView web = (TextView) v.findViewById(R.id.webAddress);
+        web.setText(com.getWebAddress());
     }
 
 }
