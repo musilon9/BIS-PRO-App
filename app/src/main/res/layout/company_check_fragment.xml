@@ -58,19 +58,84 @@
         android:textColor="#33b5e5"
         android:id="@+id/indicatorsTitle" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Two TextViews in the same line -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/addressLine1" />
+            android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/scoring_label"
+                android:id="@+id/scoringLabel" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/index_label"
+                android:id="@+id/indexLabel" />
+
+        </LinearLayout>
+
+        <!-- Two TextViews in the same line -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/addressLine2" />
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="50sp"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/scoringValue" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="50sp"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/indexValue" />
+
+        </LinearLayout>
+
+        <!-- Two TextViews in the same line -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/scoringDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/indexDescription" />
+
+        </LinearLayout>
+
 
         <!-- Sector C -->
         <View

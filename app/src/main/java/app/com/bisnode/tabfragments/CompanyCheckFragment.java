@@ -1,6 +1,7 @@
 package app.com.bisnode.tabfragments;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import app.com.bisnode.adapters.FavouriteAdapter;
 import app.com.bisnode.fakedata.FakeFavorites;
 import app.com.bisnode.fakedata.FakeSearch;
 import app.com.bisnode.objects.Company;
+import app.com.bisnode.objects.Scoring;
 import app.com.bisnode.utils.ModelUtils;
 
 public class CompanyCheckFragment extends PlaceHolderFragment {
@@ -57,9 +59,43 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
     }
 
     private void setSectorBContent(View v, Company com) {
+        TextView scoring = (TextView) v.findViewById(R.id.scoringValue);
+        scoring.setText(com.getScoring().toString());
+        scoring.setTextColor(Color.parseColor(com.getScoring().getColorCode()));
+        TextView paymentIndex = (TextView) v.findViewById(R.id.indexValue);
+        paymentIndex.setText(String.format("%d", com.getPaymentIndex()));
+        setIndexColor(paymentIndex, com.getPaymentIndex());
+        TextView scoringDesc = (TextView) v.findViewById(R.id.scoringDescription);
+        scoringDesc.setText(com.getScoring().getDescription());
+        TextView indexDesc = (TextView) v.findViewById(R.id.indexDescription);
+        setIndexDescription(indexDesc, com.getPaymentIndex());
     }
 
     private void setSectorCContent(View v, Company com) {
+    }
+
+    private void setIndexColor(TextView tv, int index) {
+        if (index < 1) tv.setTextColor(Color.parseColor(Scoring.AA.getColorCode()));
+        else if (index < 5) tv.setTextColor(Color.parseColor(Scoring.A.getColorCode()));
+        else if (index < 11) tv.setTextColor(Color.parseColor(Scoring.BBB.getColorCode()));
+        else if (index < 21) tv.setTextColor(Color.parseColor(Scoring.BB.getColorCode()));
+        else if (index < 31) tv.setTextColor(Color.parseColor(Scoring.B.getColorCode()));
+        else if (index < 61) tv.setTextColor(Color.parseColor(Scoring.CCC.getColorCode()));
+        else if (index < 91) tv.setTextColor(Color.parseColor(Scoring.C.getColorCode()));
+        else if (index < 121) tv.setTextColor(Color.parseColor(Scoring.C.getColorCode()));
+        else tv.setTextColor(Color.parseColor(Scoring.D.getColorCode()));
+    }
+
+    private void setIndexDescription(TextView tv, int index) {
+        if (index < 1) tv.setText(R.string.payment0);
+        else if (index < 5) tv.setText(R.string.payment1);
+        else if (index < 11) tv.setText(R.string.payment2);
+        else if (index < 21) tv.setText(R.string.payment3);
+        else if (index < 31) tv.setText(R.string.payment4);
+        else if (index < 61) tv.setText(R.string.payment5);
+        else if (index < 91) tv.setText(R.string.payment6);
+        else if (index < 121) tv.setText(R.string.payment7);
+        else tv.setText(R.string.payment8);
     }
 
 }

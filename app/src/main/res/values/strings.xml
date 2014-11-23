@@ -21,10 +21,12 @@
     <!-- Labels -->
     <string name="ico_label">IČO:</string>
     <string name="dic_label">DIČ:</string>
-    <string name="phone_label">TELEFON</string>
-    <string name="email_label">E-MAIL</string>
-    <string name="web_label">WEB</string>
+    <string name="scoring_label">SKÓRING</string>
+    <string name="index_label">PLATEBNÍ INDEX</string>
 
+    <string name="phone_sectionTitle">Telefon</string>
+    <string name="email_sectionTitle">E-mail</string>
+    <string name="web_sectionTitle">Web</string>
     <string name="address_sectionTitle">Sídlo firmy</string>
     <string name="activities_sectionTitle">Činnost firmy</string>
     <string name="management_sectionTitle">Vedení firmy</string>
@@ -32,6 +34,15 @@
     <string name="turnover_sectionTitle">Obrat firmy</string>
     <string name="employees_sectionTitle">Počet zaměstnanců</string>
 
+    <string name="payment0">Platí včas</string>
+    <string name="payment1">Platí těsně po splatnosti</string>
+    <string name="payment2">Platí krátce po splatnosti</string>
+    <string name="payment3">Platí průměrně</string>
+    <string name="payment4">Platí uspokojivě</string>
+    <string name="payment5">Platí pozdě</string>
+    <string name="payment6">Platí velmi pozdě</string>
+    <string name="payment7">Platí extrémně pozdě</string>
+    <string name="payment8">Riziko nezaplacení</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="one">One</string>
