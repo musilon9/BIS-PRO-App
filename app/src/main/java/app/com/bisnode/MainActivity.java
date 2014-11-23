@@ -66,7 +66,7 @@ public class MainActivity extends FragmentActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Add 3 tabs, specifying the tab's text and TabListener
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             actionBar.addTab(
                     actionBar.newTab()
                             .setIcon(getIconId(i))
@@ -166,8 +166,8 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public int getCount() {
-            // Show 4 total pages.
-            return 4;
+            // Show 3 total pages.
+            return 3;
         }
 
         @Override

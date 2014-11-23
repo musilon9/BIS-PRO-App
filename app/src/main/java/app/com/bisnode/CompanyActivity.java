@@ -72,7 +72,7 @@ public class CompanyActivity extends FragmentActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Add 3 tabs, specifying the tab's text and TabListener
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             actionBar.addTab(
                     actionBar.newTab()
                             .setText(adapter.getPageTitle(i))
@@ -147,17 +147,14 @@ public class CompanyActivity extends FragmentActivity {
                 case 2:
                     actualFragment =  FavouriteFragment.newInstance(position + 1);
                     break;
-                case 3:
-                    actualFragment = FreeInfoFragment.newInstance(position + 1);
-                    break;
             }
             return actualFragment;
         }
 
         @Override
         public int getCount() {
-            // Show 4 total pages.
-            return 4;
+            // Show 3 total pages.
+            return 3;
         }
 
         @Override
@@ -167,10 +164,8 @@ public class CompanyActivity extends FragmentActivity {
                 case 0:
                     return getString(R.string.contacts).toUpperCase(l);
                 case 1:
-                    return getString(R.string.activities).toUpperCase(l);
+                    return getString(R.string.detail_info).toUpperCase(l);
                 case 2:
-                    return getString(R.string.management).toUpperCase(l);
-                case 3:
                     return getString(R.string.check_company).toUpperCase(l);
             }
             return null;
