@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class SearchFragment extends PlaceHolderFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.search_fragment, container, false);
+        Toast.makeText(getActivity(), "Stiskněte Hledat", Toast.LENGTH_LONG).show();
         Button button = (Button) rootView.findViewById(R.id.searchButton);
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -56,6 +58,7 @@ public class SearchFragment extends PlaceHolderFragment {
                 List<CompanyModel> lis = ModelUtils.convertCompanyToCompanyModel(FakeSearch.list);
                 ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.list_item, lis);
                 expListView.setAdapter(listAdapter);
+                Toast.makeText(getActivity(), "Zvolte MADETA, a.s.", Toast.LENGTH_LONG).show();
                 expListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
