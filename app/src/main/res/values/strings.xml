@@ -2,13 +2,22 @@
 <resources>
 
     <string name="app_name">Bisnode</string>
-    <string name="search">Search</string>
-    <string name="history">History</string>
-    <string name="favourite">Favourite</string>
-    <string name="company">Company</string>
-    <string name="action_settings">Settings</string>
-    <string name="searchButtonName">Search</string>
 
+    <!-- Fragment names -->
+    <string name="search">Hledání</string>
+    <string name="history">Historie</string>
+    <string name="favourite">Oblíbené</string>
+    <string name="company">Firma</string>
+    <string name="contacts">Kontakty</string>
+    <string name="activities">Činnost</string>
+    <string name="management">Vedení</string>
+    <string name="check_company">Prověřit</string>
+
+
+    <string name="action_settings">Nastavení</string>
+    <string name="searchButtonName">Hledat</string>
+
+    <!-- Labels -->
     <string name="ico_label">IČO:</string>
     <string name="dic_label">DIČ:</string>
     <string name="phone_label">TELEFON</string>
