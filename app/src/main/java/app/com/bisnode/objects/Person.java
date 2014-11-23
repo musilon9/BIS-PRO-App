@@ -10,6 +10,14 @@ public class Person {
         this.position = position;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
     // TODO contacts?
 
 }

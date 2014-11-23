@@ -19,6 +19,7 @@ import app.com.bisnode.tabfragments.ContactsFragment;
 import app.com.bisnode.tabfragments.FavouriteFragment;
 import app.com.bisnode.tabfragments.FreeInfoFragment;
 import app.com.bisnode.tabfragments.HistoryFragment;
+import app.com.bisnode.tabfragments.ManagementFragment;
 import app.com.bisnode.tabfragments.SearchFragment;
 import app.com.bisnode.tablisteners.ActivitiesListener;
 import app.com.bisnode.tablisteners.CheckCompanyListener;
@@ -141,7 +142,7 @@ public class CompanyActivity extends FragmentActivity {
                     actualFragment = ContactsFragment.newInstance(position + 1);
                     break;
                 case 1:
-                    actualFragment = FavouriteFragment.newInstance(position + 1);
+                    actualFragment = ManagementFragment.newInstance(position + 1);
                     break;
                 case 2:
                     actualFragment =  FavouriteFragment.newInstance(position + 1);

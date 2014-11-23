@@ -25,6 +25,8 @@
     <string name="web_label">WEB</string>
 
     <string name="address_sectionTitle">Sídlo firmy</string>
+    <string name="activities_sectionTitle">Činnost firmy</string>
+    <string name="management_sectionTitle">Vedení firmy</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="one">One</string>
