@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+import app.com.bisnode.tabfragments.ContactsFragment;
 import app.com.bisnode.tabfragments.FavouriteFragment;
 import app.com.bisnode.tabfragments.FreeInfoFragment;
 import app.com.bisnode.tabfragments.HistoryFragment;
@@ -60,10 +61,10 @@ public class CompanyActivity extends FragmentActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        displayTabs();
+        displayTabs(mSectionsPagerAdapter);
     }
 
-    private void displayTabs() {
+    private void displayTabs(SectionsPagerAdapter adapter) {
         final ActionBar actionBar = getActionBar();
 
         // Specify that tabs should be displayed in the action bar.
@@ -73,6 +74,7 @@ public class CompanyActivity extends FragmentActivity {
         for (int i = 0; i < 4; i++) {
             actionBar.addTab(
                     actionBar.newTab()
+                            .setText(adapter.getPageTitle(i))
                             .setTabListener(getTabListener(i)));
         }
     }
@@ -136,10 +138,10 @@ public class CompanyActivity extends FragmentActivity {
             Fragment actualFragment = null;
             switch (position) {
                 case 0:
-                    actualFragment = SearchFragment.newInstance(position + 1);
+                    actualFragment = ContactsFragment.newInstance(position + 1);
                     break;
                 case 1:
-                    actualFragment = HistoryFragment.newInstance(position + 1);
+                    actualFragment = FavouriteFragment.newInstance(position + 1);
                     break;
                 case 2:
                     actualFragment =  FavouriteFragment.newInstance(position + 1);
