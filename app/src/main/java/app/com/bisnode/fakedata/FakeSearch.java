@@ -71,4 +71,8 @@ public class FakeSearch {
                 emails, webAddress, activities ,management, turnover, employees,
                 scoring, paymentIndex, negatives));
     }
+
+    public static Company getExample() {
+        return list.get(1);
+    }
 }

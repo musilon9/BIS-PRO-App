@@ -16,10 +16,12 @@ import android.view.MenuItem;
 
 
 import app.com.bisnode.tabfragments.FavouriteFragment;
+import app.com.bisnode.tabfragments.FreeInfoFragment;
 import app.com.bisnode.tabfragments.HistoryFragment;
 import app.com.bisnode.tabfragments.SearchFragment;
 import app.com.bisnode.tablisteners.FavouriteListener;
 import app.com.bisnode.tablisteners.HistoryListener;
+import app.com.bisnode.tablisteners.InfoListener;
 import app.com.bisnode.tablisteners.SearchListener;
 
 
@@ -64,7 +66,7 @@ public class MainActivity extends FragmentActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Add 3 tabs, specifying the tab's text and TabListener
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             actionBar.addTab(
                     actionBar.newTab()
                             .setIcon(getIconId(i))
@@ -81,7 +83,7 @@ public class MainActivity extends FragmentActivity {
             case 1:
                 id = R.drawable.ic_action_time;
                 break;
-            case 2:
+            case 2:case 3:
                 id = R.drawable.ic_action_favorite;
                 break;
         }
@@ -99,6 +101,9 @@ public class MainActivity extends FragmentActivity {
                 break;
             case 2 :
                 listener = new FavouriteListener(mViewPager);
+                break;
+            case 3 :
+                listener = new InfoListener(mViewPager);
                 break;
         }
 
@@ -152,14 +157,17 @@ public class MainActivity extends FragmentActivity {
                 case 2:
                     actualFragment =  FavouriteFragment.newInstance(position + 1);
                     break;
+                case 3:
+                    actualFragment = FreeInfoFragment.newInstance(position + 1);
+                    break;
             }
             return actualFragment;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 4 total pages.
+            return 4;
         }
 
         @Override
@@ -172,6 +180,8 @@ public class MainActivity extends FragmentActivity {
                     return getString(R.string.history).toUpperCase(l);
                 case 2:
                     return getString(R.string.favourite).toUpperCase(l);
+                case 3:
+                    return getString(R.string.company).toUpperCase(l);
             }
             return null;
         }
