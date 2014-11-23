@@ -3,6 +3,8 @@ package app.com.bisnode.fakedata;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.TreeMap;
+
 import app.com.bisnode.objects.Company;
 import app.com.bisnode.objects.NegativeIndicator;
 import app.com.bisnode.objects.Person;
@@ -54,12 +56,12 @@ public class FakeSearch {
         management.add(new Person("Teplý Milan, Ing", "Předseda představenstva"));
         management.add(new Person("Buryánek Pavel, Ing.", "Místopředseda představenstva"));
         management.add(new Person("Prouzová Katarína, Mgr.", "Předseda dozorčí rady"));
-        HashMap<Integer, Integer> turnover = new HashMap<Integer, Integer>();
+        TreeMap<Integer, Integer> turnover = new TreeMap<Integer, Integer>();
         turnover.put(2010, 5026881);
         turnover.put(2011, 5142480);
         turnover.put(2012, 5133169);
         turnover.put(2013, 5318528);
-        HashMap<Integer, Integer> employees = new HashMap<Integer, Integer>();
+        TreeMap<Integer, Integer> employees = new TreeMap<Integer, Integer>();
         employees.put(2010, 1682);
         employees.put(2011, 1605);
         employees.put(2012, 1508);

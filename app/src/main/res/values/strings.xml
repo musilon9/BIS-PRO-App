@@ -44,6 +44,9 @@
     <string name="payment7">Platí extrémně pozdě</string>
     <string name="payment8">Riziko nezaplacení</string>
 
+    <string name="loginHelp">Můžete se přihlásit pomocí Login: foo@example.com Password: hello</string>
+
+
     <string name="hello_world">Hello world!</string>
     <string name="one">One</string>
     <string name="two">Two</string>

@@ -10,7 +10,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.NavigableSet;
 
 import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
@@ -72,6 +74,40 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
     }
 
     private void setSectorCContent(View v, Company com) {
+        TextView[] turnoverYears = new TextView[] {
+                (TextView) v.findViewById(R.id.turnoverYear1),
+                (TextView) v.findViewById(R.id.turnoverYear2),
+                (TextView) v.findViewById(R.id.turnoverYear3),
+                (TextView) v.findViewById(R.id.turnoverYear4)
+        };
+        TextView[] turnoverValues = new TextView[] {
+                (TextView) v.findViewById(R.id.turnoverValue1),
+                (TextView) v.findViewById(R.id.turnoverValue2),
+                (TextView) v.findViewById(R.id.turnoverValue3),
+                (TextView) v.findViewById(R.id.turnoverValue4)
+        };
+        TextView[] employeesYears = new TextView[] {
+                (TextView) v.findViewById(R.id.employeesYear1),
+                (TextView) v.findViewById(R.id.employeesYear2),
+                (TextView) v.findViewById(R.id.employeesYear3),
+                (TextView) v.findViewById(R.id.employeesYear4)
+        };
+        TextView[] employeesValues = new TextView[] {
+                (TextView) v.findViewById(R.id.employeesValue1),
+                (TextView) v.findViewById(R.id.employeesValue2),
+                (TextView) v.findViewById(R.id.employeesValue3),
+                (TextView) v.findViewById(R.id.employeesValue4)
+        };
+        int startYearT = com.getTurnover().firstKey();
+        int startYearE = com.getEmployees().firstKey();
+        for (int i = 0; i < 4; i++) {
+            turnoverYears[i].setText(String.format("%d", startYearT + i));
+            turnoverValues[i].setText(String.format("%d",
+                        com.getTurnover().get(startYearT + i)/1000) + " mil.");
+            employeesYears[i].setText(String.format("%d", startYearE + i));
+            employeesValues[i].setText(String.format("%d",
+                    com.getEmployees().get(startYearE + i)));
+        }
     }
 
     private void setIndexColor(TextView tv, int index) {
