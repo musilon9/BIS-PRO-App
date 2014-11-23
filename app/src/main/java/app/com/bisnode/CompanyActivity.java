@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+import app.com.bisnode.tabfragments.CompanyCheckFragment;
 import app.com.bisnode.tabfragments.ContactsFragment;
 import app.com.bisnode.tabfragments.FavouriteFragment;
 import app.com.bisnode.tabfragments.FreeInfoFragment;
@@ -145,7 +146,7 @@ public class CompanyActivity extends FragmentActivity {
                     actualFragment = ManagementFragment.newInstance(position + 1);
                     break;
                 case 2:
-                    actualFragment =  FavouriteFragment.newInstance(position + 1);
+                    actualFragment =  CompanyCheckFragment.newInstance(position + 1);
                     break;
             }
             return actualFragment;

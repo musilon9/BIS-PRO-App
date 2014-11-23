@@ -28,6 +28,10 @@
     <string name="address_sectionTitle">Sídlo firmy</string>
     <string name="activities_sectionTitle">Činnost firmy</string>
     <string name="management_sectionTitle">Vedení firmy</string>
+    <string name="indicators_sectionTitle">Indikátory</string>
+    <string name="turnover_sectionTitle">Obrat firmy</string>
+    <string name="employees_sectionTitle">Počet zaměstnanců</string>
+
 
     <string name="hello_world">Hello world!</string>
     <string name="one">One</string>
