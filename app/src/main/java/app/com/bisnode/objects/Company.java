@@ -2,6 +2,7 @@ package app.com.bisnode.objects;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class Company {
 
@@ -21,8 +22,8 @@ public class Company {
     // DETAILS TODO financial analysis fields
     private ArrayList<String> activities;
     private ArrayList<Person> management;
-    private HashMap<Integer, Integer> turnover;
-    private HashMap<Integer, Integer> employees;
+    private TreeMap<Integer, Integer> turnover;
+    private TreeMap<Integer, Integer> employees;
 
     // INDICATORS
     private Scoring scoring;
@@ -38,8 +39,8 @@ public class Company {
 
     public Company(String name, String IC, String DIC, String address, String city, String zip, String state,
                    ArrayList<String> phoneNumbers, ArrayList<String> emails, String webAddress, ArrayList<String> activities,
-                   ArrayList<Person> management, HashMap<Integer, Integer> turnover,
-                   HashMap<Integer, Integer> employees, Scoring scoring, int paymentIndex,
+                   ArrayList<Person> management, TreeMap<Integer, Integer> turnover,
+                   TreeMap<Integer, Integer> employees, Scoring scoring, int paymentIndex,
                    ArrayList<NegativeIndicator> negatives) {
         this.name = name;
         this.IC = IC;
@@ -110,11 +111,11 @@ public class Company {
         return management;
     }
 
-    public HashMap<Integer, Integer> getTurnover() {
+    public TreeMap<Integer, Integer> getTurnover() {
         return turnover;
     }
 
-    public HashMap<Integer, Integer> getEmployees() {
+    public TreeMap<Integer, Integer> getEmployees() {
         return employees;
     }
 

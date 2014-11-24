@@ -153,12 +153,93 @@
             android:textColor="#33b5e5"
             android:id="@+id/turnoverTitle" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- FOUR TextViews in the same line -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/phoneNumbers" />
+            android:orientation="horizontal" >
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="XYZ"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/turnoverYear1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/turnoverValue1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/turnoverYear3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/turnoverValue3" />
+
+        </LinearLayout>
+
+        <!-- FOUR TextViews in the same line -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/turnoverYear2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/turnoverValue2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/turnoverYear4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/turnoverValue4" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -175,12 +256,93 @@
             android:textColor="#33b5e5"
             android:id="@+id/employeesTitle" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- FOUR TextViews in the same line -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/emailAddresses" />
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/employeesYear1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/employeesValue1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/employeesYear3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/employeesValue3" />
+
+        </LinearLayout>
+
+        <!-- FOUR TextViews in the same line -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/employeesYear2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/employeesValue2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/employeesYear4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="XYZ"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/employeesValue4" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
