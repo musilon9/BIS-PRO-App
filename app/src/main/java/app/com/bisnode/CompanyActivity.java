@@ -9,6 +9,7 @@ import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 
 import android.view.Menu;
@@ -64,6 +65,8 @@ public class CompanyActivity extends FragmentActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         displayTabs(mSectionsPagerAdapter);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void displayTabs(SectionsPagerAdapter adapter) {
@@ -118,6 +121,12 @@ public class CompanyActivity extends FragmentActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        // Respond to the action bar's Up/Home button
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
 
