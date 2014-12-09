@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+import app.com.bisnode.fakedata.FakeSearch;
 import app.com.bisnode.tabfragments.CompanyCheckFragment;
 import app.com.bisnode.tabfragments.ContactsFragment;
 import app.com.bisnode.tabfragments.FavouriteFragment;
@@ -54,7 +55,7 @@ public class CompanyActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setTitle(FakeSearch.getExample().getName());
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

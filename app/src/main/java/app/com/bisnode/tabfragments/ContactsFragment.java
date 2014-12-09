@@ -5,20 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.List;
-
-import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
-import app.com.bisnode.adapters.CompanyModel;
-import app.com.bisnode.adapters.FavouriteAdapter;
-import app.com.bisnode.fakedata.FakeFavorites;
 import app.com.bisnode.fakedata.FakeSearch;
 import app.com.bisnode.objects.Company;
-import app.com.bisnode.utils.ModelUtils;
 
 public class ContactsFragment extends PlaceHolderFragment {
 
@@ -39,7 +30,7 @@ public class ContactsFragment extends PlaceHolderFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.free_info_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.contact_fragment, container, false);
         Company com = FakeSearch.getExample();
         setSectorAContent(rootView, com);
         setSectorBContent(rootView, com);

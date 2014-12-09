@@ -29,7 +29,7 @@ public class FreeInfoFragment extends PlaceHolderFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.free_info_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.contact_fragment, container, false);
         Company com = FakeSearch.getExample();
         setSectorAContent(rootView, com);
         setSectorBContent(rootView, com);
