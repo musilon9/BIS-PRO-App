@@ -41,19 +41,9 @@ public class ManagementFragment extends PlaceHolderFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.management_fragment, container, false);
         Company com = FakeSearch.getExample();
-        setSectorBasic(rootView, com);
         setSectorAContent(rootView, com);
         setSectorBContent(rootView, com);
         return rootView;
-    }
-
-    private void setSectorBasic(View v, Company com) {
-        TextView companyName = (TextView) v.findViewById(R.id.companyName);
-        companyName.setText(com.getName());
-        TextView companyICO = (TextView) v.findViewById(R.id.companyICO);
-        companyICO.setText(getString(R.string.ico_label) + " " + com.getIC());
-        TextView companyDIC = (TextView) v.findViewById(R.id.companyDIC);
-        companyDIC.setText(getString(R.string.dic_label) + " " + com.getDIC());
     }
 
     private void setSectorAContent(View v, Company com) {
