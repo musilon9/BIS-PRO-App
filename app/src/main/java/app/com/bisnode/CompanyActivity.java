@@ -64,6 +64,17 @@ public class CompanyActivity extends FragmentActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        // Select the corresponding tab when the user swipes between pages with a touch gesture
+        mViewPager.setOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        // When swiping between pages, select the
+                        // corresponding tab.
+                        getActionBar().setSelectedNavigationItem(position);
+                    }
+                });
+
         displayTabs(mSectionsPagerAdapter);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);

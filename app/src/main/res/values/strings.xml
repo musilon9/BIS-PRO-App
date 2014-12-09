@@ -46,6 +46,7 @@
 
     <string name="loginHelp">Můžete se přihlásit pomocí Login: foo@example.com Password: hello</string>
 
+    <string name="dummyLogin">foo@example.com</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="one">One</string>
