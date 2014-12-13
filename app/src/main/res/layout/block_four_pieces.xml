@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Gray line -->
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -10,15 +11,32 @@
         android:layout_marginBottom="5dp"
         android:background="#c0c0c0" />
 
-    <TextView
+    <!-- Section title with trend arrow -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="0.8"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/placeholderString"
         android:textColor="#33b5e5"
         android:id="@+id/title_blockFour" />
 
-    <!-- FOUR TextViews in the same line -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_arrow_up"
+            android:id="@+id/trendArrow"/>
+
+    </LinearLayout>
+
+    <!-- Line 1: four TextViews in the same line -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,7 +80,7 @@
 
     </LinearLayout>
 
-    <!-- FOUR TextViews in the same line -->
+    <!-- Line 2: four TextViews in the same line -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

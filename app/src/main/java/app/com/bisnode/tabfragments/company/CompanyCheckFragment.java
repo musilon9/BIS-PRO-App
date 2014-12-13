@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,10 +38,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         View rootView = inflater.inflate(R.layout.fragment_company_check, container, false);
         Company com = FakeSearch.getExample();
 
-        // to be renamed
-        setSectorBContent(rootView, com);
-
-        // new sections using blocks
+        setIndicatorsContent(rootView, com);
         setTurnoverContent(rootView, com);
         setEmployeesContent(rootView, com);
 
@@ -71,6 +69,11 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
             values[i].setText(String.format("%d",
                     com.getEmployees().get(startYear + i)));
         }
+
+        ImageView trend = (ImageView) block.findViewById(R.id.trendArrow);
+        if (com.getEmployees().get(startYear + labels.length - 1) <
+                com.getEmployees().get(startYear + labels.length - 2))
+            trend.setImageResource(R.drawable.ic_arrow_down);
     }
 
     private void setTurnoverContent(View rootView, Company com) {
@@ -97,9 +100,14 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
             values[i].setText(String.format("%d",
                     com.getTurnover().get(startYear + i) / 1000) + " mil.");
         }
+
+        ImageView trend = (ImageView) block.findViewById(R.id.trendArrow);
+        if (com.getTurnover().get(startYear + labels.length - 1) <
+                com.getTurnover().get(startYear + labels.length - 2))
+            trend.setImageResource(R.drawable.ic_arrow_down);
     }
 
-    private void setSectorBContent(View v, Company com) {
+    private void setIndicatorsContent(View v, Company com) {
         TextView scoring = (TextView) v.findViewById(R.id.scoringValue);
         scoring.setText(com.getScoring().toString());
         scoring.setTextColor(Color.parseColor(com.getScoring().getColorCode()));
