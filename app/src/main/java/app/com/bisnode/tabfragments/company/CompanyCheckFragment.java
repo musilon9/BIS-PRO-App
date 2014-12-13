@@ -36,19 +36,67 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_company_check, container, false);
         Company com = FakeSearch.getExample();
+
+        // to be renamed
         setSectorBContent(rootView, com);
-        setSectorCContent(rootView, com);
 
-        LinearLayout ll1 = (LinearLayout) rootView.findViewById(R.id.testBlock);
-        TextView label1 = (TextView) ll1.findViewById(R.id.label_blockFour_1A);
-
-        LinearLayout ll2 = (LinearLayout) rootView.findViewById(R.id.testBlock2);
-        TextView label2 = (TextView) ll2.findViewById(R.id.label_blockFour_1A);
-
-        label1.setText("Label 1");
-        label2.setText("Label 2");
+        // new sections using blocks
+        setTurnoverContent(rootView, com);
+        setEmployeesContent(rootView, com);
 
         return rootView;
+    }
+
+    private void setEmployeesContent(View rootView, Company com) {
+        LinearLayout block = (LinearLayout) rootView.findViewById(R.id.employeesBlock);
+        TextView[] labels = new TextView[] {
+                (TextView) block.findViewById(R.id.label_blockFour_1A),
+                (TextView) block.findViewById(R.id.label_blockFour_2A),
+                (TextView) block.findViewById(R.id.label_blockFour_1B),
+                (TextView) block.findViewById(R.id.label_blockFour_2B)
+        };
+        TextView[] values = new TextView[] {
+                (TextView) block.findViewById(R.id.info_blockFour_1A),
+                (TextView) block.findViewById(R.id.info_blockFour_2A),
+                (TextView) block.findViewById(R.id.info_blockFour_1B),
+                (TextView) block.findViewById(R.id.info_blockFour_2B)
+        };
+
+        TextView title = (TextView) block.findViewById(R.id.title_blockFour);
+        title.setText(R.string.employees_sectionTitle);
+
+        int startYear = com.getEmployees().firstKey();
+        for (int i = 0; i < labels.length; i++) {
+            labels[i].setText(String.format("%d", startYear + i));
+            values[i].setText(String.format("%d",
+                    com.getEmployees().get(startYear + i)));
+        }
+    }
+
+    private void setTurnoverContent(View rootView, Company com) {
+        LinearLayout block = (LinearLayout) rootView.findViewById(R.id.turnoverBlock);
+        TextView[] labels = new TextView[] {
+                (TextView) block.findViewById(R.id.label_blockFour_1A),
+                (TextView) block.findViewById(R.id.label_blockFour_2A),
+                (TextView) block.findViewById(R.id.label_blockFour_1B),
+                (TextView) block.findViewById(R.id.label_blockFour_2B)
+        };
+        TextView[] values = new TextView[] {
+                (TextView) block.findViewById(R.id.info_blockFour_1A),
+                (TextView) block.findViewById(R.id.info_blockFour_2A),
+                (TextView) block.findViewById(R.id.info_blockFour_1B),
+                (TextView) block.findViewById(R.id.info_blockFour_2B)
+        };
+
+        TextView title = (TextView) block.findViewById(R.id.title_blockFour);
+        title.setText(R.string.turnover_sectionTitle);
+
+        int startYear = com.getTurnover().firstKey();
+        for (int i = 0; i < labels.length; i++) {
+            labels[i].setText(String.format("%d", startYear + i));
+            values[i].setText(String.format("%d",
+                    com.getTurnover().get(startYear + i) / 1000) + " mil.");
+        }
     }
 
     private void setSectorBContent(View v, Company com) {
@@ -62,43 +110,6 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         scoringDesc.setText(com.getScoring().getDescription());
         TextView indexDesc = (TextView) v.findViewById(R.id.indexDescription);
         setIndexDescription(indexDesc, com.getPaymentIndex());
-    }
-
-    private void setSectorCContent(View v, Company com) {
-        TextView[] turnoverYears = new TextView[] {
-                (TextView) v.findViewById(R.id.turnoverYear1),
-                (TextView) v.findViewById(R.id.turnoverYear2),
-                (TextView) v.findViewById(R.id.turnoverYear3),
-                (TextView) v.findViewById(R.id.turnoverYear4)
-        };
-        TextView[] turnoverValues = new TextView[] {
-                (TextView) v.findViewById(R.id.turnoverValue1),
-                (TextView) v.findViewById(R.id.turnoverValue2),
-                (TextView) v.findViewById(R.id.turnoverValue3),
-                (TextView) v.findViewById(R.id.turnoverValue4)
-        };
-        TextView[] employeesYears = new TextView[] {
-                (TextView) v.findViewById(R.id.employeesYear1),
-                (TextView) v.findViewById(R.id.employeesYear2),
-                (TextView) v.findViewById(R.id.employeesYear3),
-                (TextView) v.findViewById(R.id.employeesYear4)
-        };
-        TextView[] employeesValues = new TextView[] {
-                (TextView) v.findViewById(R.id.employeesValue1),
-                (TextView) v.findViewById(R.id.employeesValue2),
-                (TextView) v.findViewById(R.id.employeesValue3),
-                (TextView) v.findViewById(R.id.employeesValue4)
-        };
-        int startYearT = com.getTurnover().firstKey();
-        int startYearE = com.getEmployees().firstKey();
-        for (int i = 0; i < 4; i++) {
-            turnoverYears[i].setText(String.format("%d", startYearT + i));
-            turnoverValues[i].setText(String.format("%d",
-                        com.getTurnover().get(startYearT + i)/1000) + " mil.");
-            employeesYears[i].setText(String.format("%d", startYearE + i));
-            employeesValues[i].setText(String.format("%d",
-                    com.getEmployees().get(startYearE + i)));
-        }
     }
 
     private void setIndexColor(TextView tv, int index) {
