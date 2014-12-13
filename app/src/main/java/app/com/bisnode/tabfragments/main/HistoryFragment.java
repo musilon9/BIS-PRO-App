@@ -38,10 +38,10 @@ public class HistoryFragment extends PlaceHolderFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.history_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_history, container, false);
         ListView expListView = (ListView) rootView.findViewById(R.id.historyListView);
         List<CompanyModel> list = ModelUtils.convertCompanyToCompanyModel(FakeHistory.list);
-        ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.favourite_list_item, list);
+        ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.list_item_favorites, list);
         expListView.setAdapter(listAdapter);
         return rootView;
     }

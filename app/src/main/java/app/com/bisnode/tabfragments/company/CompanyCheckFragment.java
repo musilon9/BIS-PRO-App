@@ -33,7 +33,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.company_check_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_company_check, container, false);
         Company com = FakeSearch.getExample();
         setSectorBContent(rootView, com);
         setSectorCContent(rootView, com);

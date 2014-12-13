@@ -6,9 +6,9 @@ import android.support.v4.view.ViewPager;
 
 import app.com.bisnode.tablisteners.PageMover;
 
-public class FavouriteListener extends PageMover implements ActionBar.TabListener {
+public class FavoritesListener extends PageMover implements ActionBar.TabListener {
 
-    public FavouriteListener(ViewPager viewPager) {
+    public FavoritesListener(ViewPager viewPager) {
         super(viewPager);
     }
 

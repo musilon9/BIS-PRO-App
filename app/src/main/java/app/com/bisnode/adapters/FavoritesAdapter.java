@@ -10,20 +10,19 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
 
 
-public class FavouriteAdapter extends ArrayAdapter<CompanyModel> {
+public class FavoritesAdapter extends ArrayAdapter<CompanyModel> {
 
-    public FavouriteAdapter(Context context, int resource, List<CompanyModel> companyModels) {
+    public FavoritesAdapter(Context context, int resource, List<CompanyModel> companyModels) {
         super(context, resource, companyModels);
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
         if(rowView == null) {
-            rowView = LayoutInflater.from(this.getContext()).inflate(R.layout.favourite_list_item, null);
+            rowView = LayoutInflater.from(this.getContext()).inflate(R.layout.list_item_favorites, null);
         }
         final CompanyModel companyModel = getItem(position);
         TextView title = (TextView) rowView.findViewById(R.id.item_title);
