@@ -1,19 +1,21 @@
-package app.com.bisnode.tablisteners;
+package app.com.bisnode.tablisteners.company;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
+import app.com.bisnode.tablisteners.PageMover;
 
-public class HistoryListener extends PageMover implements ActionBar.TabListener {
+public class ContactsListener extends PageMover implements ActionBar.TabListener {
 
-    public HistoryListener(ViewPager viewPager) {
+    public ContactsListener(ViewPager viewPager) {
         super(viewPager);
     }
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         mViewPager.setCurrentItem(tab.getPosition());
+
     }
 
     @Override
@@ -25,4 +27,5 @@ public class HistoryListener extends PageMover implements ActionBar.TabListener 
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
+
 }

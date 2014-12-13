@@ -17,21 +17,12 @@ import android.view.MenuItem;
 
 
 import app.com.bisnode.fakedata.FakeSearch;
-import app.com.bisnode.tabfragments.CompanyCheckFragment;
-import app.com.bisnode.tabfragments.ContactsFragment;
-import app.com.bisnode.tabfragments.FavouriteFragment;
-import app.com.bisnode.tabfragments.FreeInfoFragment;
-import app.com.bisnode.tabfragments.HistoryFragment;
-import app.com.bisnode.tabfragments.ManagementFragment;
-import app.com.bisnode.tabfragments.SearchFragment;
-import app.com.bisnode.tablisteners.ActivitiesListener;
-import app.com.bisnode.tablisteners.CheckCompanyListener;
-import app.com.bisnode.tablisteners.ContactsListener;
-import app.com.bisnode.tablisteners.FavouriteListener;
-import app.com.bisnode.tablisteners.HistoryListener;
-import app.com.bisnode.tablisteners.InfoListener;
-import app.com.bisnode.tablisteners.ManagementListener;
-import app.com.bisnode.tablisteners.SearchListener;
+import app.com.bisnode.tabfragments.company.CompanyCheckFragment;
+import app.com.bisnode.tabfragments.company.CompanyDetailsFragment;
+import app.com.bisnode.tabfragments.company.ContactsFragment;
+import app.com.bisnode.tablisteners.company.CompanyCheckListener;
+import app.com.bisnode.tablisteners.company.CompanyDetailsListener;
+import app.com.bisnode.tablisteners.company.ContactsListener;
 
 
 public class CompanyActivity extends FragmentActivity {
@@ -103,13 +94,10 @@ public class CompanyActivity extends FragmentActivity {
                 listener = new ContactsListener(mViewPager);
                 break;
             case 1 :
-                listener = new ActivitiesListener(mViewPager);
+                listener = new CompanyDetailsListener(mViewPager);
                 break;
             case 2 :
-                listener = new ManagementListener(mViewPager);
-                break;
-            case 3 :
-                listener = new CheckCompanyListener(mViewPager);
+                listener = new CompanyCheckListener(mViewPager);
                 break;
         }
 
@@ -164,7 +152,7 @@ public class CompanyActivity extends FragmentActivity {
                     actualFragment = ContactsFragment.newInstance(position + 1);
                     break;
                 case 1:
-                    actualFragment = ManagementFragment.newInstance(position + 1);
+                    actualFragment = CompanyDetailsFragment.newInstance(position + 1);
                     break;
                 case 2:
                     actualFragment =  CompanyCheckFragment.newInstance(position + 1);

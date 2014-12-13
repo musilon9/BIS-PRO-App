@@ -15,14 +15,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-import app.com.bisnode.tabfragments.FavouriteFragment;
-import app.com.bisnode.tabfragments.FreeInfoFragment;
-import app.com.bisnode.tabfragments.HistoryFragment;
-import app.com.bisnode.tabfragments.SearchFragment;
-import app.com.bisnode.tablisteners.FavouriteListener;
-import app.com.bisnode.tablisteners.HistoryListener;
-import app.com.bisnode.tablisteners.InfoListener;
-import app.com.bisnode.tablisteners.SearchListener;
+import app.com.bisnode.tabfragments.main.FavouriteFragment;
+import app.com.bisnode.tabfragments.main.HistoryFragment;
+import app.com.bisnode.tabfragments.main.SearchFragment;
+import app.com.bisnode.tablisteners.main.FavouriteListener;
+import app.com.bisnode.tablisteners.main.HistoryListener;
+import app.com.bisnode.tablisteners.main.SearchListener;
 
 
 public class MainActivity extends FragmentActivity {
@@ -113,9 +111,6 @@ public class MainActivity extends FragmentActivity {
             case 2 :
                 listener = new FavouriteListener(mViewPager);
                 break;
-            case 3 :
-                listener = new InfoListener(mViewPager);
-                break;
         }
 
         return listener;
@@ -167,9 +162,6 @@ public class MainActivity extends FragmentActivity {
                     break;
                 case 2:
                     actualFragment =  FavouriteFragment.newInstance(position + 1);
-                    break;
-                case 3:
-                    actualFragment = FreeInfoFragment.newInstance(position + 1);
                     break;
             }
             return actualFragment;

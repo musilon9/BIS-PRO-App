@@ -1,40 +1,32 @@
-package app.com.bisnode.tabfragments;
+package app.com.bisnode.tabfragments.company;
 
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.List;
-
-import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
-import app.com.bisnode.adapters.CompanyModel;
-import app.com.bisnode.adapters.FavouriteAdapter;
-import app.com.bisnode.fakedata.FakeFavorites;
 import app.com.bisnode.fakedata.FakeSearch;
 import app.com.bisnode.objects.Company;
-import app.com.bisnode.utils.ModelUtils;
+import app.com.bisnode.tabfragments.PlaceHolderFragment;
 
-public class ManagementFragment extends PlaceHolderFragment {
+public class CompanyDetailsFragment extends PlaceHolderFragment {
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static ManagementFragment newInstance(int sectionNumber) {
-        ManagementFragment fragment = new ManagementFragment();
+    public static CompanyDetailsFragment newInstance(int sectionNumber) {
+        CompanyDetailsFragment fragment = new CompanyDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public ManagementFragment() {
+    public CompanyDetailsFragment() {
     }
 
     @Override

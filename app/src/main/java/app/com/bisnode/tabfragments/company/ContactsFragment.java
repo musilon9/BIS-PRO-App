@@ -1,4 +1,5 @@
-package app.com.bisnode.tabfragments;
+package app.com.bisnode.tabfragments.company;
+
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,22 +10,23 @@ import android.widget.TextView;
 import app.com.bisnode.R;
 import app.com.bisnode.fakedata.FakeSearch;
 import app.com.bisnode.objects.Company;
+import app.com.bisnode.tabfragments.PlaceHolderFragment;
 
-public class FreeInfoFragment extends PlaceHolderFragment {
+public class ContactsFragment extends PlaceHolderFragment {
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static FreeInfoFragment newInstance(int sectionNumber) {
-        FreeInfoFragment fragment = new FreeInfoFragment();
+    public static ContactsFragment newInstance(int sectionNumber) {
+        ContactsFragment fragment = new ContactsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public FreeInfoFragment() {
+    public ContactsFragment() {
     }
 
     @Override

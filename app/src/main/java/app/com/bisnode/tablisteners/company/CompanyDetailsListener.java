@@ -1,12 +1,14 @@
-package app.com.bisnode.tablisteners;
+package app.com.bisnode.tablisteners.company;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
-public class ActivitiesListener extends PageMover implements ActionBar.TabListener {
+import app.com.bisnode.tablisteners.PageMover;
 
-    public ActivitiesListener(ViewPager viewPager) {
+public class CompanyDetailsListener extends PageMover implements ActionBar.TabListener {
+
+    public CompanyDetailsListener(ViewPager viewPager) {
         super(viewPager);
     }
 

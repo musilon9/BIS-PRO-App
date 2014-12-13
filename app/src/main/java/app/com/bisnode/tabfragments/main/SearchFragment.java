@@ -1,4 +1,4 @@
-package app.com.bisnode.tabfragments;
+package app.com.bisnode.tabfragments.main;
 
 
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -22,7 +21,7 @@ import app.com.bisnode.R;
 import app.com.bisnode.adapters.CompanyModel;
 import app.com.bisnode.adapters.SearchAdapter;
 import app.com.bisnode.fakedata.FakeSearch;
-import app.com.bisnode.tablisteners.SearchItemOnClickListener;
+import app.com.bisnode.tabfragments.PlaceHolderFragment;
 import app.com.bisnode.utils.ModelUtils;
 
 public class SearchFragment extends PlaceHolderFragment {

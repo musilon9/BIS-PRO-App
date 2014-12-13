@@ -1,4 +1,4 @@
-package app.com.bisnode.tabfragments;
+package app.com.bisnode.tabfragments.company;
 
 
 import android.graphics.Color;
@@ -6,23 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.NavigableSet;
-
-import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
-import app.com.bisnode.adapters.CompanyModel;
-import app.com.bisnode.adapters.FavouriteAdapter;
-import app.com.bisnode.fakedata.FakeFavorites;
 import app.com.bisnode.fakedata.FakeSearch;
 import app.com.bisnode.objects.Company;
 import app.com.bisnode.objects.Scoring;
-import app.com.bisnode.utils.ModelUtils;
+import app.com.bisnode.tabfragments.PlaceHolderFragment;
 
 public class CompanyCheckFragment extends PlaceHolderFragment {
 
