@@ -303,6 +303,12 @@
 
         </LinearLayout>
 
+        <include layout="@layout/block_four_pieces"
+                 android:id="@+id/testBlock"/>
+
+        <include layout="@layout/block_four_pieces"
+            android:id="@+id/testBlock2"/>
+
     </LinearLayout>
 
 </ScrollView>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import app.com.bisnode.R;
@@ -37,6 +38,16 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         Company com = FakeSearch.getExample();
         setSectorBContent(rootView, com);
         setSectorCContent(rootView, com);
+
+        LinearLayout ll1 = (LinearLayout) rootView.findViewById(R.id.testBlock);
+        TextView label1 = (TextView) ll1.findViewById(R.id.label_blockFour_1A);
+
+        LinearLayout ll2 = (LinearLayout) rootView.findViewById(R.id.testBlock2);
+        TextView label2 = (TextView) ll2.findViewById(R.id.label_blockFour_1A);
+
+        label1.setText("Label 1");
+        label2.setText("Label 2");
+
         return rootView;
     }
 
