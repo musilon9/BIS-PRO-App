@@ -19,8 +19,8 @@
     <string name="searchButtonName">Hledat</string>
 
     <!-- Labels -->
-    <string name="ico_label">IČO:</string>
-    <string name="dic_label">DIČ:</string>
+    <string name="ICO_label">IČO:</string>
+    <string name="DIC_label">DIČ:</string>
     <string name="scoring_label">SKÓRING</string>
     <string name="index_label">PLATEBNÍ INDEX</string>
 
@@ -48,6 +48,7 @@
 
     <string name="dummyLogin">foo@example.com</string>
     <string name="placeholderString">Placeholder</string>
+    <string name="imageButtonDescription">Super ikonka</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="one">One</string>

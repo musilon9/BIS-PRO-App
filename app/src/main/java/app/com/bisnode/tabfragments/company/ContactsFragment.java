@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import app.com.bisnode.R;
 import app.com.bisnode.fakedata.FakeSearch;
@@ -34,42 +38,75 @@ public class ContactsFragment extends PlaceHolderFragment {
         View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
         Company com = FakeSearch.getExample();
         setSectorAContent(rootView, com);
-        setSectorBContent(rootView, com);
-        setSectorCContent(rootView, com);
+
+        setAddressContent(rootView, com);
+        setPhoneContent(rootView, com);
+        setEmailContent(rootView, com);
+        setWebContent(rootView, com);
+
         return rootView;
+    }
+
+    private void setAddressContent(View rootView, Company com) {
+        LinearLayout block = (LinearLayout) rootView.findViewById(R.id.addressBlock);
+        TextView title = (TextView) block.findViewById(R.id.title_blockContact);
+        title.setText(getString(R.string.address_sectionTitle));
+        ImageButton icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
+        icon.setImageResource(R.drawable.ic_map);
+        TextView address = (TextView) block.findViewById(R.id.info_blockContact);
+        // TODO change to sth better, like list view?
+        address.setText(String.format("%s\n%s, %s", com.getAddress(),
+                com.getZip(), com.getCity()));
+    }
+
+    private void setPhoneContent(View rootView, Company com) {
+        LinearLayout block = (LinearLayout) rootView.findViewById(R.id.phoneBlock);
+        TextView title = (TextView) block.findViewById(R.id.title_blockContact);
+        title.setText(getString(R.string.phone_sectionTitle));
+        ImageButton icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
+        icon.setImageResource(R.drawable.ic_phone);
+        TextView numbers = (TextView) block.findViewById(R.id.info_blockContact);
+        String phoneNumbers = "";
+        ArrayList<String> numb = com.getPhoneNumbers();
+        // TODO change to sth better, like list view?
+        for (int i = 0; i < numb.size(); i++) {
+            phoneNumbers += numb.get(i) + (i == numb.size() - 1 ? "" : "\n");
+        }
+        numbers.setText(phoneNumbers);
+    }
+
+    private void setEmailContent(View rootView, Company com) {
+        LinearLayout block = (LinearLayout) rootView.findViewById(R.id.emailBlock);
+        TextView title = (TextView) block.findViewById(R.id.title_blockContact);
+        title.setText(getString(R.string.email_sectionTitle));
+        ImageButton icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
+        icon.setImageResource(R.drawable.ic_email);
+        TextView emails = (TextView) block.findViewById(R.id.info_blockContact);
+        String addresses = "";
+        ArrayList<String> add = com.getEmails();
+        for (int i = 0; i < add.size(); i++) {
+           addresses += add.get(i) + (i == add.size() - 1 ? "" : "\n");
+        }
+        emails.setText(addresses);
+    }
+
+    private void setWebContent(View rootView, Company com) {
+        LinearLayout block = (LinearLayout) rootView.findViewById(R.id.webBlock);
+        TextView title = (TextView) block.findViewById(R.id.title_blockContact);
+        title.setText(getString(R.string.web_sectionTitle));
+        ImageButton icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
+        icon.setImageResource(R.drawable.ic_web);
+        TextView web = (TextView) block.findViewById(R.id.info_blockContact);
+        web.setText(com.getWebAddress());
     }
 
     private void setSectorAContent(View v, Company com) {
         TextView companyName = (TextView) v.findViewById(R.id.companyName);
         companyName.setText(com.getName());
         TextView companyICO = (TextView) v.findViewById(R.id.companyICO);
-        companyICO.setText(getString(R.string.ico_label) + " " + com.getIC());
+        companyICO.setText(getString(R.string.ICO_label) + " " + com.getIC());
         TextView companyDIC = (TextView) v.findViewById(R.id.companyDIC);
-        companyDIC.setText(getString(R.string.dic_label) + " " + com.getDIC());
-    }
-
-    private void setSectorBContent(View v, Company com) {
-        TextView address1 = (TextView) v.findViewById(R.id.addressLine1);
-        address1.setText(com.getAddress());
-        TextView address2 = (TextView) v.findViewById(R.id.addressLine2);
-        address2.setText(com.getZip() + ", " + com.getCity());
-    }
-
-    private void setSectorCContent(View v, Company com) {
-        TextView phone = (TextView) v.findViewById(R.id.phoneNumbers);
-        String phoneNumbers = "";
-        for (int i = 0; i < com.getPhoneNumbers().size(); i++) {
-            phoneNumbers += (i == 0 ? "" : "\n") + com.getPhoneNumbers().get(i);
-        }
-        phone.setText(phoneNumbers);
-        TextView email = (TextView) v.findViewById(R.id.emailAddresses);
-        String emails = "";
-        for (int i = 0; i < com.getEmails().size(); i++) {
-            emails += (i == 0 ? "" : "\n") + com.getEmails().get(i);
-        }
-        email.setText(emails);
-        TextView web = (TextView) v.findViewById(R.id.webAddress);
-        web.setText(com.getWebAddress());
+        companyDIC.setText(getString(R.string.DIC_label) + " " + com.getDIC());
     }
 
 }
