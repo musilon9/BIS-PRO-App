@@ -1,7 +1,10 @@
 package app.com.bisnode.tabfragments.company;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import app.com.bisnode.R;
 import app.com.bisnode.fakedata.FakeSearch;
@@ -37,8 +41,8 @@ public class ContactsFragment extends PlaceHolderFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
         Company com = FakeSearch.getExample();
-        setSectorAContent(rootView, com);
 
+        setBasicContent(rootView, com);
         setAddressContent(rootView, com);
         setPhoneContent(rootView, com);
         setEmailContent(rootView, com);
@@ -47,7 +51,16 @@ public class ContactsFragment extends PlaceHolderFragment {
         return rootView;
     }
 
-    private void setAddressContent(View rootView, Company com) {
+    private void setBasicContent(View v, Company com) {
+        TextView companyName = (TextView) v.findViewById(R.id.companyName);
+        companyName.setText(com.getName());
+        TextView companyICO = (TextView) v.findViewById(R.id.companyICO);
+        companyICO.setText(getString(R.string.ICO_label) + " " + com.getIC());
+        TextView companyDIC = (TextView) v.findViewById(R.id.companyDIC);
+        companyDIC.setText(getString(R.string.DIC_label) + " " + com.getDIC());
+    }
+
+    private void setAddressContent(View rootView, final Company com) {
         LinearLayout block = (LinearLayout) rootView.findViewById(R.id.addressBlock);
         TextView title = (TextView) block.findViewById(R.id.title_blockContact);
         title.setText(getString(R.string.address_sectionTitle));
@@ -57,6 +70,17 @@ public class ContactsFragment extends PlaceHolderFragment {
         // TODO change to sth better, like list view?
         address.setText(String.format("%s\n%s, %s", com.getAddress(),
                 com.getZip(), com.getCity()));
+
+        // start Google Maps to show address on map
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = String.format(new Locale("cs", "CZ"), "geo:0,0q=%s, %s",
+                        com.getAddress(), com.getCity());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     private void setPhoneContent(View rootView, Company com) {
@@ -98,15 +122,6 @@ public class ContactsFragment extends PlaceHolderFragment {
         icon.setImageResource(R.drawable.ic_web);
         TextView web = (TextView) block.findViewById(R.id.info_blockContact);
         web.setText(com.getWebAddress());
-    }
-
-    private void setSectorAContent(View v, Company com) {
-        TextView companyName = (TextView) v.findViewById(R.id.companyName);
-        companyName.setText(com.getName());
-        TextView companyICO = (TextView) v.findViewById(R.id.companyICO);
-        companyICO.setText(getString(R.string.ICO_label) + " " + com.getIC());
-        TextView companyDIC = (TextView) v.findViewById(R.id.companyDIC);
-        companyDIC.setText(getString(R.string.DIC_label) + " " + com.getDIC());
     }
 
 }
