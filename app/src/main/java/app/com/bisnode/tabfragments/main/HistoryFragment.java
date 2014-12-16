@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import app.com.bisnode.AppController;
 import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
 import app.com.bisnode.adapters.CompanyModel;
