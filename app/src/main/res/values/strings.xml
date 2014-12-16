@@ -54,5 +54,6 @@
     <string name="one">One</string>
     <string name="two">Two</string>
     <string name="three">Three</string>
+    <string name="logged">Zůstat přihlášen</string>
 
 </resources>

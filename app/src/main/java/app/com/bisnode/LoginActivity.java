@@ -5,10 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -24,9 +24,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +44,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
+    private static final String PREFS_NAME = "file";
+    private static final String LOGGED_PERMANENTLY = "loggedPermanently";
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -54,14 +56,16 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private View keepLogged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        checkKeepLogged();
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        keepLogged = findViewById(R.id.keepLogged);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -86,6 +90,14 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    private void checkKeepLogged() {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        boolean logged = settings.getBoolean(LOGGED_PERMANENTLY, false);
+        if(logged) {
+            switchToMainActivity();
+        }
     }
 
     private void populateAutoComplete() {
@@ -274,7 +286,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
+                    if(((CheckBox)keepLogged).isChecked()) {
+                        save();
+                    }
                     return pieces[1].equals(mPassword);
                 }
             }
@@ -289,9 +303,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
 
             if (success) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
+                switchToMainActivity();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -303,6 +315,19 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    private void switchToMainActivity() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void save() {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(LOGGED_PERMANENTLY, true);
+        editor.apply();
     }
 }
 
