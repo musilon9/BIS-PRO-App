@@ -4,7 +4,6 @@ package app.com.bisnode.tabfragments.company;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import java.util.Locale;
 import app.com.bisnode.R;
 import app.com.bisnode.fakedata.FakeSearch;
 import app.com.bisnode.objects.Company;
+import app.com.bisnode.onclicklisteners.DatabaseHandler;
 import app.com.bisnode.tabfragments.PlaceHolderFragment;
 
 public class ContactsFragment extends PlaceHolderFragment {
@@ -41,7 +41,7 @@ public class ContactsFragment extends PlaceHolderFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
         Company com = FakeSearch.getExample();
-
+        setListeners(com, rootView);
         setBasicContent(rootView, com);
         setAddressContent(rootView, com);
         setPhoneContent(rootView, com);
@@ -124,4 +124,11 @@ public class ContactsFragment extends PlaceHolderFragment {
         web.setText(com.getWebAddress());
     }
 
+    public void setListeners(Company com, View rootView) {
+        ImageButton imageView = (ImageButton) rootView.findViewById(R.id.mapIcon);
+        imageView.setClickable(true);
+        DatabaseHandler databaseHandler = new DatabaseHandler(this.getActivity().getApplicationContext(), com);
+        imageView.setOnClickListener(databaseHandler);
+        databaseHandler.insertCompanyAsHistory(com);
+    }
 }

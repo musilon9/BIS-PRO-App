@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.com.bisnode.R;
+import app.com.bisnode.onclicklisteners.DatabaseHandler;
 
 
 public class FavoritesAdapter extends ArrayAdapter<CompanyModel> {
@@ -35,14 +36,9 @@ public class FavoritesAdapter extends ArrayAdapter<CompanyModel> {
             @Override
             public void onClick(View v) {
                 remove(companyModel);
+                new DatabaseHandler(getContext()).deleteCompany(companyModel.getId());
             }
         });
         return rowView;
     }
-
-    public void delete(int pos) {
-
-    }
-
-
 }

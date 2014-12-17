@@ -10,22 +10,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,9 +37,8 @@ import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
 import app.com.bisnode.adapters.CompanyModel;
 import app.com.bisnode.adapters.SearchAdapter;
-import app.com.bisnode.fakedata.FakeSearch;
+import app.com.bisnode.requests.CustomJsonArrayRequest;
 import app.com.bisnode.tabfragments.PlaceHolderFragment;
-import app.com.bisnode.utils.ModelUtils;
 
 public class SearchFragment extends PlaceHolderFragment {
 
@@ -68,22 +68,52 @@ public class SearchFragment extends PlaceHolderFragment {
             @Override
             public void onClick(View v)
             {
-                ((EditText) rootView.findViewById(R.id.searchField)).setText("madeta");
-                ListView expListView = (ListView) rootView.findViewById(R.id.listView);
-                List<CompanyModel> lis = ModelUtils.convertCompanyToCompanyModel(FakeSearch.list);
-                ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.list_item, lis);
-                expListView.setAdapter(listAdapter);
-                //searchRequest("madeta");
-                Toast.makeText(getActivity(), "Zvolte MADETA, a.s.", Toast.LENGTH_LONG).show();
-                expListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent showCompany = null;
-                        if (position == 1)
-                            showCompany = new Intent(getActivity(), CompanyActivity.class);
-                        if (showCompany != null) startActivity(showCompany);
-                    }
-                });
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+                String url = "https://gnosus.bisnode.cz/magnusweb-rest/query/simple/subject.fulltext?q=madeta";
+
+                CustomJsonArrayRequest jsObjRequest = new CustomJsonArrayRequest
+                        (url, new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                ListView expListView = (ListView) rootView.findViewById(R.id.listView);
+                                List<CompanyModel> lis = null;
+                                try {
+                                    lis = new ArrayList<>(response.length());
+                                    JSONObject actualModel;
+                                    for(int i = 0; i < response.length(); i++) {
+                                        actualModel = response.getJSONObject(i);
+                                        lis.add(new CompanyModel(0,
+                                                0,
+                                                actualModel.optString("name"),
+                                                actualModel.optString("town")));
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.list_item, lis);
+                                expListView.setAdapter(listAdapter);
+                                Toast.makeText(getActivity(), "Zvolte MADETA, a.s.", Toast.LENGTH_LONG).show();
+                                expListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        Intent showCompany = null;
+                                        if (position == 1)
+                                            showCompany = new Intent(getActivity(), CompanyActivity.class);
+                                        if (showCompany != null) startActivity(showCompany);
+                                    }
+                                });
+                            }
+                        }
+                        , new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getActivity(), "Error při stahování dat ze serveru", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                queue.add(jsObjRequest);
+
+
             }
         });
         return rootView;

@@ -10,21 +10,15 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import app.com.bisnode.AppController;
 import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
 import app.com.bisnode.adapters.CompanyModel;
 import app.com.bisnode.adapters.SearchAdapter;
-import app.com.bisnode.fakedata.FakeHistory;
+import app.com.bisnode.onclicklisteners.DatabaseHandler;
 import app.com.bisnode.tabfragments.PlaceHolderFragment;
-import app.com.bisnode.utils.ModelUtils;
 
 public class HistoryFragment extends PlaceHolderFragment {
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
     public static HistoryFragment newInstance(int sectionNumber) {
         HistoryFragment fragment = new HistoryFragment();
         Bundle args = new Bundle();
@@ -41,7 +35,7 @@ public class HistoryFragment extends PlaceHolderFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_history, container, false);
         ListView expListView = (ListView) rootView.findViewById(R.id.historyListView);
-        List<CompanyModel> list = ModelUtils.convertCompanyToCompanyModel(FakeHistory.list);
+        List<CompanyModel> list = new DatabaseHandler(this.getActivity().getApplicationContext()).getHistory();
         ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.list_item_favorites, list);
         expListView.setAdapter(listAdapter);
         return rootView;

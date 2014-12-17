@@ -10,21 +10,15 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import app.com.bisnode.AppController;
 import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
 import app.com.bisnode.adapters.CompanyModel;
 import app.com.bisnode.adapters.FavoritesAdapter;
-import app.com.bisnode.fakedata.FakeFavorites;
+import app.com.bisnode.onclicklisteners.DatabaseHandler;
 import app.com.bisnode.tabfragments.PlaceHolderFragment;
-import app.com.bisnode.utils.ModelUtils;
 
 public class FavoritesFragment extends PlaceHolderFragment {
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
     public static FavoritesFragment newInstance(int sectionNumber) {
         FavoritesFragment fragment = new FavoritesFragment();
         Bundle args = new Bundle();
@@ -40,7 +34,7 @@ public class FavoritesFragment extends PlaceHolderFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
-        List<CompanyModel> lis = ModelUtils.convertCompanyToCompanyModel(FakeFavorites.list);
+        List<CompanyModel> lis = new DatabaseHandler(this.getActivity().getApplicationContext()).getFavourites();
         ListView expListView = (ListView) rootView.findViewById(R.id.favouriteListView);
         ListAdapter listAdapter = new FavoritesAdapter(MyApplication.getAppContext(), R.layout.list_item_favorites, lis);
         expListView.setAdapter(listAdapter);

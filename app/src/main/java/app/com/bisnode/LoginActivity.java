@@ -60,6 +60,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getApplicationContext().deleteDatabase("BLA");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         checkKeepLogged();

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import app.com.bisnode.AppController;
 import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
 
