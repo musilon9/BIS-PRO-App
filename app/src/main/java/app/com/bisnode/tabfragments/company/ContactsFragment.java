@@ -83,7 +83,7 @@ public class ContactsFragment extends PlaceHolderFragment {
         });
     }
 
-    private void setPhoneContent(View rootView, Company com) {
+    private void setPhoneContent(View rootView, final Company com) {
         LinearLayout block = (LinearLayout) rootView.findViewById(R.id.phoneBlock);
         TextView title = (TextView) block.findViewById(R.id.title_blockContact);
         title.setText(getString(R.string.phone_sectionTitle));
@@ -97,9 +97,18 @@ public class ContactsFragment extends PlaceHolderFragment {
             phoneNumbers += numb.get(i) + (i == numb.size() - 1 ? "" : "\n");
         }
         numbers.setText(phoneNumbers);
+
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = String.format("tel:%s", com.getPhoneNumbers().get(0)); // TODO show dialog to choose number
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(uri));
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
-    private void setEmailContent(View rootView, Company com) {
+    private void setEmailContent(View rootView, final Company com) {
         LinearLayout block = (LinearLayout) rootView.findViewById(R.id.emailBlock);
         TextView title = (TextView) block.findViewById(R.id.title_blockContact);
         title.setText(getString(R.string.email_sectionTitle));
@@ -112,9 +121,18 @@ public class ContactsFragment extends PlaceHolderFragment {
            addresses += add.get(i) + (i == add.size() - 1 ? "" : "\n");
         }
         emails.setText(addresses);
+
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = String.format("mailto:%s", com.getEmails().get(0)); // TODO show dialog to choose address
+                Intent intent = new Intent(Intent.ACTION_SEND, Uri.parse(uri));
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
-    private void setWebContent(View rootView, Company com) {
+    private void setWebContent(View rootView, final Company com) {
         LinearLayout block = (LinearLayout) rootView.findViewById(R.id.webBlock);
         TextView title = (TextView) block.findViewById(R.id.title_blockContact);
         title.setText(getString(R.string.web_sectionTitle));
@@ -122,6 +140,15 @@ public class ContactsFragment extends PlaceHolderFragment {
         icon.setImageResource(R.drawable.ic_web);
         TextView web = (TextView) block.findViewById(R.id.info_blockContact);
         web.setText(com.getWebAddress());
+
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = com.getWebAddress(); // TODO show dialog to choose web address
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     public void setListeners(Company com, View rootView) {
