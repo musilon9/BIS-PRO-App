@@ -20,17 +20,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/item_icon"
-        android:textSize="23dp"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="#000000"
-        android:text="Madeta" />
+        android:text="@string/placeholderString" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="PRAHA"
+        android:text="@string/placeholderString"
         android:id="@+id/item_location"
         android:layout_below="@+id/item_title"
         android:layout_alignLeft="@+id/item_title"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textSize="12sp"
         android:textColor="#000000"
         android:layout_alignStart="@+id/item_title" />
 

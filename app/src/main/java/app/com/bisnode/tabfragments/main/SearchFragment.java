@@ -83,8 +83,8 @@ public class SearchFragment extends PlaceHolderFragment {
                                     JSONObject actualModel;
                                     for(int i = 0; i < response.length(); i++) {
                                         actualModel = response.getJSONObject(i);
-                                        lis.add(new CompanyModel(0,
-                                                0,
+                                        lis.add(new CompanyModel(actualModel.optLong("entId"),
+                                                R.drawable.ic_company,
                                                 actualModel.optString("name"),
                                                 actualModel.optString("town")));
                                     }

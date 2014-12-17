@@ -3,12 +3,12 @@ package app.com.bisnode.adapters;
 
 public class CompanyModel {
 
-    private int id;
+    private long id;
     private int icon;
     private String name;
     private String location;
 
-    public CompanyModel(int id, int icon, String name, String location) {
+    public CompanyModel(long id, int icon, String name, String location) {
         this.id = id;
         this.icon = icon;
         this.name = name;
@@ -27,7 +27,7 @@ public class CompanyModel {
         return location;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -44,6 +44,6 @@ public class CompanyModel {
 
     @Override
     public int hashCode() {
-        return id;
+        return (int) (id ^ (id >>> 32));
     }
 }

@@ -20,7 +20,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickLis
     private static final String DATABASE_NAME = "BLA";
 
     private static final String FAVOURITE_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS FAVOURITES ("
-        + "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+        + "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"      // TODO use ID from API, data type LONG!
         + "icon           INTEGER    ,"
         + "name           CHAR(50)     NOT NULL,"
         + "location        CHAR(50)  NOT NULL,"
@@ -90,7 +90,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickLis
         return companyModels;
     }
 
-    public void deleteCompany(int companyId) {
+    public void deleteCompany(long companyId) {
         getWritableDatabase().delete("FAVOURITES", "ID = "+companyId, null);
     }
 
