@@ -62,7 +62,7 @@ public class SearchFragment extends PlaceHolderFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_search, container, false);
-        Toast.makeText(getActivity(), "Stiskněte Hledat", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getActivity(), "Stiskněte Hledat", Toast.LENGTH_LONG).show();
         Button button = (Button) rootView.findViewById(R.id.searchButton);
         final EditText queryField = (EditText) rootView.findViewById(R.id.searchField);
         button.setOnClickListener(new View.OnClickListener()
