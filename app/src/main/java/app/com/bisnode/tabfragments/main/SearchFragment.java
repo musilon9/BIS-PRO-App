@@ -101,8 +101,11 @@ public class SearchFragment extends PlaceHolderFragment {
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent showCompany = null;
                                         CompanyModel selectedCompany = (CompanyModel) parent.getItemAtPosition(position);
-                                        if (selectedCompany.getName().equals("MADETA a. s."))
+                                        if (selectedCompany.getName().equals("MADETA a. s.")) {
                                             showCompany = new Intent(getActivity(), CompanyActivity.class);
+                                            showCompany.putExtra("id", selectedCompany.getId());
+                                            showCompany.putExtra("name", selectedCompany.getName());
+                                        }
                                         if (showCompany != null) startActivity(showCompany);
                                     }
                                 });
@@ -111,7 +114,7 @@ public class SearchFragment extends PlaceHolderFragment {
                         , new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(getActivity(), "Error při stahování dat ze serveru", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), getString(R.string.serverError), Toast.LENGTH_LONG).show();
                             }
                         });
                 queue.add(jsObjRequest);

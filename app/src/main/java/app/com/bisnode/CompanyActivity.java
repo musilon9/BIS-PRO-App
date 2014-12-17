@@ -46,7 +46,8 @@ public class CompanyActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle(FakeSearch.getExample().getName());
+        //setTitle(FakeSearch.getExample().getName());
+        setTitle(getIntent().getStringExtra("name"));
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
