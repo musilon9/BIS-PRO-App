@@ -86,7 +86,7 @@ public class SearchFragment extends PlaceHolderFragment {
                                     for(int i = 0; i < response.length(); i++) {
                                         actualModel = response.getJSONObject(i);
                                         lis.add(new CompanyModel(actualModel.optLong("entId"),
-                                                R.drawable.ic_company,
+                                                actualModel.optLong("regNbr")!= 0 ? R.drawable.ic_company : R.drawable.ic_person,
                                                 actualModel.optString("name"),
                                                 actualModel.optString("town")));
                                     }
@@ -95,7 +95,7 @@ public class SearchFragment extends PlaceHolderFragment {
                                 }
                                 ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.list_item, lis);
                                 expListView.setAdapter(listAdapter);
-                                Toast.makeText(getActivity(), "Zvolte MADETA, a.s.", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getActivity(), "Zvolte MADETA, a.s.", Toast.LENGTH_LONG).show();
                                 expListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
