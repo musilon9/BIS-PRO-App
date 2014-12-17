@@ -98,7 +98,8 @@ public class SearchFragment extends PlaceHolderFragment {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent showCompany = null;
-                                        if (position == 1)
+                                        CompanyModel selectedCompany = (CompanyModel) parent.getItemAtPosition(position);
+                                        if (selectedCompany.getName().equals("MADETA a. s."))
                                             showCompany = new Intent(getActivity(), CompanyActivity.class);
                                         if (showCompany != null) startActivity(showCompany);
                                     }
