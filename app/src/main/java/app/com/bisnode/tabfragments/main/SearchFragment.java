@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -63,6 +64,7 @@ public class SearchFragment extends PlaceHolderFragment {
         final View rootView = inflater.inflate(R.layout.fragment_search, container, false);
         Toast.makeText(getActivity(), "Stiskněte Hledat", Toast.LENGTH_LONG).show();
         Button button = (Button) rootView.findViewById(R.id.searchButton);
+        final EditText queryField = (EditText) rootView.findViewById(R.id.searchField);
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -70,7 +72,7 @@ public class SearchFragment extends PlaceHolderFragment {
             {
                 RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-                String url = "https://gnosus.bisnode.cz/magnusweb-rest/query/simple/subject.fulltext?q=madeta";
+                String url = "https://gnosus.bisnode.cz/magnusweb-rest/query/simple/subject.fulltext?q=" + queryField.getText();
 
                 CustomJsonArrayRequest jsObjRequest = new CustomJsonArrayRequest
                         (url, new Response.Listener<JSONArray>() {
