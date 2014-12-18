@@ -73,6 +73,15 @@
     <string name="jsonContactPhone">Telefon</string>
     <string name="jsonContactEmail">E-mail</string>
     <string name="jsonContactWeb">www</string>
+    <string name="jsonIdICO">IČ</string>
+    <string name="jsonIdDIC">DIČ</string>
+    <string name="jsonIdCompType">Právní forma</string>
+    <string name="jsonIdCompDPH">Plátce DPH</string>
+    <string name="labelSince">od roku</string>
 
+    <!-- JSON Fields -->
+    <string name="jsonFieldType">typeTxt</string>
+    <string name="jsonFieldValue">valueTxt</string>
+    <string name="jsonFieldStartDate">strtDt</string>
 
 </resources>

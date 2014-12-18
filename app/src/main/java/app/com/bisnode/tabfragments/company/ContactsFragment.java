@@ -1,8 +1,6 @@
 package app.com.bisnode.tabfragments.company;
 
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +20,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import app.com.bisnode.R;
 import app.com.bisnode.fakedata.FakeSearch;
@@ -59,7 +56,7 @@ public class ContactsFragment extends PlaceHolderFragment {
 
     private void setContents(View v, Company com) {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        setBasicContent(v, com);
+        setBasicContent(v, queue);
         setAddressContent(v, queue);
         setContactContents(v, queue);
 //        setPhoneContent(v, com);
@@ -67,13 +64,15 @@ public class ContactsFragment extends PlaceHolderFragment {
 //        setWebContent(v, com);
     }
 
-    private void setBasicContent(View v, Company com) {
+    private void setBasicContent(View v, RequestQueue queue) {
         TextView companyName = (TextView) v.findViewById(R.id.companyName);
-        companyName.setText(com.getName());
+        companyName.setText(getActivity().getIntent().getStringExtra("name"));
         TextView companyICO = (TextView) v.findViewById(R.id.companyICO);
-        companyICO.setText(getString(R.string.ICO_label) + " " + com.getIC());
         TextView companyDIC = (TextView) v.findViewById(R.id.companyDIC);
-        companyDIC.setText(getString(R.string.DIC_label) + " " + com.getDIC());
+        TextView companyType = (TextView) v.findViewById(R.id.companyType);
+        TextView companyDPH = (TextView) v.findViewById(R.id.companyDPH);
+        requestCompanyID(companyICO, companyDIC, queue);
+        requestCompanyType(companyType, companyDPH, queue);
     }
 
     private void setAddressContent(View rootView, RequestQueue queue) {
@@ -189,6 +188,68 @@ public class ContactsFragment extends PlaceHolderFragment {
         requestContacts(phoneView, emailView, webView, queue);
     }
 
+    private void requestCompanyID(final TextView ICO, final TextView DIC, RequestQueue queue) {
+        String url = String.format(getString(R.string.requestID),
+                getActivity().getIntent().getLongExtra("id", 0));
+        CustomJsonArrayRequest request = new CustomJsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject contact = response.getJSONObject(i);
+                        String s = contact.optString(getString(R.string.jsonFieldType));
+                        if (s.equals(getString(R.string.jsonIdICO))) {
+                            ICO.setText(String.format("%s: %s", getString(R.string.jsonIdICO),
+                                    contact.optString(getString(R.string.jsonFieldValue))));
+                        } else if (s.equals(getString(R.string.jsonIdDIC))) {
+                            DIC.setText(String.format("%s: %s", getString(R.string.jsonIdDIC),
+                                    contact.optString(getString(R.string.jsonFieldValue))));
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), getString(R.string.serverError), Toast.LENGTH_LONG).show();
+            }
+        });
+        queue.add(request);
+    }
+
+    private void requestCompanyType(final TextView companyType, final TextView companyDPH, RequestQueue queue) {
+        String url = String.format(getString(R.string.requestRegInfo),
+                getActivity().getIntent().getLongExtra("id", 0));
+        CustomJsonArrayRequest request = new CustomJsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject contact = response.getJSONObject(i);
+                        String s = contact.optString(getString(R.string.jsonFieldType));
+                        if (s.equals(getString(R.string.jsonIdCompType))) {
+                            companyType.setText(String.format("%s %s %s", contact.optString(getString(R.string.jsonFieldValue)),
+                                    getString(R.string.labelSince),
+                                    contact.optString(getString(R.string.jsonFieldStartDate)).substring(0, 4)));
+                        } else if (s.equals(getString(R.string.jsonIdCompDPH))) {
+                            companyDPH.setText(contact.optString(getString(R.string.jsonFieldValue)));
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), getString(R.string.serverError), Toast.LENGTH_LONG).show();
+            }
+        });
+        queue.add(request);
+    }
+
     private void requestAddress(final TextView addressView, RequestQueue queue) {
         String url = String.format(
                 getString(R.string.requestAddresses),
@@ -198,7 +259,7 @@ public class ContactsFragment extends PlaceHolderFragment {
             public void onResponse(JSONArray response) {
                 try {
                     JSONObject jsonAddress = response.getJSONObject(0);
-                    addressView.setText(jsonAddress.optString("valueTxt"));
+                    addressView.setText(jsonAddress.optString(getString(R.string.jsonFieldValue)));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -223,18 +284,15 @@ public class ContactsFragment extends PlaceHolderFragment {
                 try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject contact = response.getJSONObject(i);
-                        switch (contact.optString("typeTxt")) {
-                            case "Telefon":
-                                phoneView.setText(contact.optString("valueTxt"));
-                                break;
-                            case "E-mail":
-                                address = contact.optString("valueTxt");
-                                emailView.setText(address.substring(3, address.length() - 1));
-                                break;
-                            case "www":
-                                address = contact.optString("valueTxt");
-                                webView.setText(address.substring(3, address.length() - 1));
-                                break;
+                        String s = contact.optString(getString(R.string.jsonFieldType));
+                        if (s.equals(getString(R.string.jsonContactPhone))) {
+                            phoneView.setText(contact.optString(getString(R.string.jsonFieldValue)));
+                        } else if (s.equals(getString(R.string.jsonContactEmail))) {
+                            address = contact.optString(getString(R.string.jsonFieldValue));
+                            emailView.setText(address.substring(3, address.length() - 1));
+                        } else if (s.equals(getString(R.string.jsonContactWeb))) {
+                            address = contact.optString(getString(R.string.jsonFieldValue));
+                            webView.setText(address.substring(3, address.length() - 1));
                         }
                     }
                 } catch (JSONException e) {

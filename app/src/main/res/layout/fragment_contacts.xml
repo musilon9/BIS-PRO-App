@@ -26,23 +26,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Large Text"
+                    android:text="@string/placeholderString"
                     android:textStyle="bold"
                     android:id="@+id/companyName" />
 
                 <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/loadingString"
+                android:id="@+id/companyType" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Medium Text"
-                    android:id="@+id/companyICO" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/loadingString"
+                    android:id="@+id/companyDPH" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Medium Text"
-                    android:id="@+id/companyDIC" />
+                    android:text="@string/loadingString"
+                    android:id="@+id/companyICO" />
+
+                <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/loadingString"
+                android:id="@+id/companyDIC" />
+
 
             </LinearLayout>
 
