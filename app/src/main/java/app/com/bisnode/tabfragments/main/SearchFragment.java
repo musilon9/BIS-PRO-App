@@ -62,7 +62,6 @@ public class SearchFragment extends PlaceHolderFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_search, container, false);
-        //Toast.makeText(getActivity(), "Stiskněte Hledat", Toast.LENGTH_LONG).show();
         Button button = (Button) rootView.findViewById(R.id.searchButton);
         final EditText queryField = (EditText) rootView.findViewById(R.id.searchField);
         button.setOnClickListener(new View.OnClickListener()
@@ -86,7 +85,7 @@ public class SearchFragment extends PlaceHolderFragment {
                                     for(int i = 0; i < response.length(); i++) {
                                         actualModel = response.getJSONObject(i);
                                         lis.add(new CompanyModel(actualModel.optLong("entId"),
-                                                actualModel.optLong("regNbr")!= 0 ? R.drawable.ic_company : R.drawable.ic_person,
+                                                getIconForType(actualModel.optString("typeCd")),
                                                 actualModel.optString("name"),
                                                 actualModel.optString("town")));
                                     }
@@ -95,13 +94,12 @@ public class SearchFragment extends PlaceHolderFragment {
                                 }
                                 ListAdapter listAdapter = new SearchAdapter(MyApplication.getAppContext(), R.layout.list_item, lis);
                                 expListView.setAdapter(listAdapter);
-                                //Toast.makeText(getActivity(), "Zvolte MADETA, a.s.", Toast.LENGTH_LONG).show();
                                 expListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent showCompany = null;
                                         CompanyModel selectedCompany = (CompanyModel) parent.getItemAtPosition(position);
-                                        if (selectedCompany.getName().equals("MADETA a. s.")) {
+                                        if (selectedCompany.getName().equals("MADETA a. s.") || true) {
                                             showCompany = new Intent(getActivity(), CompanyActivity.class);
                                             showCompany.putExtra("id", selectedCompany.getId());
                                             showCompany.putExtra("name", selectedCompany.getName());
@@ -125,46 +123,10 @@ public class SearchFragment extends PlaceHolderFragment {
         return rootView;
     }
 
-    private void searchRequest(String query) {
-        // Tag used to cancel the request
-        String tag_json_arry = "json_array_req";
-
-        String url = "https://gnosus.bisnode.cz/magnusweb-rest/query/simple/subject.fulltext?q=" + query;
-        final String sid = "gnosus/56url2test28134";
-
-        final String TAG = "Volley";
-        final ProgressDialog pDialog = new ProgressDialog(getActivity());
-        pDialog.setMessage("Loading...");
-        pDialog.show();
-
-        JsonArrayRequest req = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d(TAG, response.toString());
-                        pDialog.hide();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                pDialog.hide();
-            }
-        }) {
-            /**
-             * Passing session ID header
-             */
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("sid", sid);
-                return headers;
-            }
-        };
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(req, tag_json_arry);
-
+    private int getIconForType(String type) {
+        if (type.charAt(3) == '0') return R.drawable.ic_company;
+        else if (type.charAt(5) == '1') return R.drawable.ic_person;
+        else return R.drawable.ic_ent_person;
     }
 
 }

@@ -82,7 +82,7 @@ public class ContactsFragment extends PlaceHolderFragment {
         ImageButton icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
         icon.setImageResource(R.drawable.ic_map);
         TextView address = (TextView) block.findViewById(R.id.info_blockContact);
-        requestAddress(address, queue);
+        requestAddress(address, block, queue);
 
         // start Google Maps to show directions TODO must be async, add to requestAddress!
 //        icon.setOnClickListener(new View.OnClickListener() {
@@ -164,28 +164,28 @@ public class ContactsFragment extends PlaceHolderFragment {
 
     private void setContactContents(View rootView, RequestQueue queue) {
         // PHONE NUMBER
-        LinearLayout block = (LinearLayout) rootView.findViewById(R.id.phoneBlock);
-        TextView title = (TextView) block.findViewById(R.id.title_blockContact);
-        ImageButton icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
+        LinearLayout phoneBlock = (LinearLayout) rootView.findViewById(R.id.phoneBlock);
+        TextView title = (TextView) phoneBlock.findViewById(R.id.title_blockContact);
+        ImageButton icon = (ImageButton) phoneBlock.findViewById(R.id.contact_imgButton);
         title.setText(getString(R.string.phone_sectionTitle));
         icon.setImageResource(R.drawable.ic_phone);
-        TextView phoneView = (TextView) block.findViewById(R.id.info_blockContact);
+        TextView phoneView = (TextView) phoneBlock.findViewById(R.id.info_blockContact);
         // E-MAIL ADDRESS
-        block = (LinearLayout) rootView.findViewById(R.id.emailBlock);
-        title = (TextView) block.findViewById(R.id.title_blockContact);
-        icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
+        LinearLayout emailBlock = (LinearLayout) rootView.findViewById(R.id.emailBlock);
+        title = (TextView) emailBlock.findViewById(R.id.title_blockContact);
+        icon = (ImageButton) emailBlock.findViewById(R.id.contact_imgButton);
         title.setText(getString(R.string.email_sectionTitle));
         icon.setImageResource(R.drawable.ic_email);
-        TextView emailView = (TextView) block.findViewById(R.id.info_blockContact);
+        TextView emailView = (TextView) emailBlock.findViewById(R.id.info_blockContact);
         // WEB ADDRESS
-        block = (LinearLayout) rootView.findViewById(R.id.webBlock);
-        title = (TextView) block.findViewById(R.id.title_blockContact);
-        icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
+        LinearLayout webBlock = (LinearLayout) rootView.findViewById(R.id.webBlock);
+        title = (TextView) webBlock.findViewById(R.id.title_blockContact);
+        icon = (ImageButton) webBlock.findViewById(R.id.contact_imgButton);
         title.setText(getString(R.string.web_sectionTitle));
         icon.setImageResource(R.drawable.ic_web);
-        TextView webView = (TextView) block.findViewById(R.id.info_blockContact);
+        TextView webView = (TextView) webBlock.findViewById(R.id.info_blockContact);
 
-        requestContacts(phoneView, emailView, webView, queue);
+        requestContacts(phoneView, emailView, webView, phoneBlock, emailBlock, webBlock, queue);
     }
 
     private void requestCompanyID(final TextView ICO, final TextView DIC, RequestQueue queue) {
@@ -201,9 +201,11 @@ public class ContactsFragment extends PlaceHolderFragment {
                         if (s.equals(getString(R.string.jsonIdICO))) {
                             ICO.setText(String.format("%s: %s", getString(R.string.jsonIdICO),
                                     contact.optString(getString(R.string.jsonFieldValue))));
+                            ICO.setVisibility(View.VISIBLE);
                         } else if (s.equals(getString(R.string.jsonIdDIC))) {
                             DIC.setText(String.format("%s: %s", getString(R.string.jsonIdDIC),
                                     contact.optString(getString(R.string.jsonFieldValue))));
+                            DIC.setVisibility(View.VISIBLE);
                         }
                     }
                 } catch (JSONException e) {
@@ -230,11 +232,13 @@ public class ContactsFragment extends PlaceHolderFragment {
                         JSONObject contact = response.getJSONObject(i);
                         String s = contact.optString(getString(R.string.jsonFieldType));
                         if (s.equals(getString(R.string.jsonIdCompType))) {
-                            companyType.setText(String.format("%s %s %s", contact.optString(getString(R.string.jsonFieldValue)),
+                            companyType.setText(String.format("%s (%s %s)", contact.optString(getString(R.string.jsonFieldValue)),
                                     getString(R.string.labelSince),
                                     contact.optString(getString(R.string.jsonFieldStartDate)).substring(0, 4)));
+                            companyType.setVisibility(View.VISIBLE);
                         } else if (s.equals(getString(R.string.jsonIdCompDPH))) {
                             companyDPH.setText(contact.optString(getString(R.string.jsonFieldValue)));
+                            companyDPH.setVisibility(View.VISIBLE);
                         }
                     }
                 } catch (JSONException e) {
@@ -250,7 +254,7 @@ public class ContactsFragment extends PlaceHolderFragment {
         queue.add(request);
     }
 
-    private void requestAddress(final TextView addressView, RequestQueue queue) {
+    private void requestAddress(final TextView addressView, final LinearLayout addressBlock, RequestQueue queue) {
         String url = String.format(
                 getString(R.string.requestAddresses),
                 getActivity().getIntent().getLongExtra("id", 0));
@@ -260,6 +264,7 @@ public class ContactsFragment extends PlaceHolderFragment {
                 try {
                     JSONObject jsonAddress = response.getJSONObject(0);
                     addressView.setText(jsonAddress.optString(getString(R.string.jsonFieldValue)));
+                    addressBlock.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -273,8 +278,9 @@ public class ContactsFragment extends PlaceHolderFragment {
         queue.add(request);
     }
 
-    private void requestContacts(final TextView phoneView, final TextView emailView,
-                                 final TextView webView, RequestQueue queue) {
+    private void requestContacts(final TextView phoneView, final TextView emailView, final TextView webView,
+                                 final LinearLayout phoneBlock, final LinearLayout emailBlock, final LinearLayout webBlock,
+                                 RequestQueue queue) {
         String url = String.format(getString(R.string.requestContacts),
                 getActivity().getIntent().getLongExtra("id", 0));
         CustomJsonArrayRequest request = new CustomJsonArrayRequest(url, new Response.Listener<JSONArray>() {
@@ -287,12 +293,15 @@ public class ContactsFragment extends PlaceHolderFragment {
                         String s = contact.optString(getString(R.string.jsonFieldType));
                         if (s.equals(getString(R.string.jsonContactPhone))) {
                             phoneView.setText(contact.optString(getString(R.string.jsonFieldValue)));
+                            phoneBlock.setVisibility(View.VISIBLE);
                         } else if (s.equals(getString(R.string.jsonContactEmail))) {
                             address = contact.optString(getString(R.string.jsonFieldValue));
                             emailView.setText(address.substring(3, address.length() - 1));
+                            emailBlock.setVisibility(View.VISIBLE);
                         } else if (s.equals(getString(R.string.jsonContactWeb))) {
                             address = contact.optString(getString(R.string.jsonFieldValue));
                             webView.setText(address.substring(3, address.length() - 1));
+                            webBlock.setVisibility(View.VISIBLE);
                         }
                     }
                 } catch (JSONException e) {
