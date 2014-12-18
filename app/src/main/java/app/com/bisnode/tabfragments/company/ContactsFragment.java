@@ -268,7 +268,7 @@ public class ContactsFragment extends PlaceHolderFragment {
                             webIcon.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(value));
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(value.substring(3, value.length() - 1)));
                                     getActivity().startActivity(intent);
                                 }
                             });
