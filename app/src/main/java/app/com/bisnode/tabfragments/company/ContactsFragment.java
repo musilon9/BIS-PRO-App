@@ -10,6 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -18,6 +28,7 @@ import app.com.bisnode.R;
 import app.com.bisnode.fakedata.FakeSearch;
 import app.com.bisnode.objects.Company;
 import app.com.bisnode.onclicklisteners.DatabaseHandler;
+import app.com.bisnode.requests.CustomJsonArrayRequest;
 import app.com.bisnode.tabfragments.PlaceHolderFragment;
 
 public class ContactsFragment extends PlaceHolderFragment {
@@ -42,13 +53,18 @@ public class ContactsFragment extends PlaceHolderFragment {
         View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
         Company com = FakeSearch.getExample();
         setListeners(com, rootView);
-        setBasicContent(rootView, com);
-        setAddressContent(rootView, com);
-        setPhoneContent(rootView, com);
-        setEmailContent(rootView, com);
-        setWebContent(rootView, com);
-
+        setContents(rootView, com);
         return rootView;
+    }
+
+    private void setContents(View v, Company com) {
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        setBasicContent(v, com);
+        setAddressContent(v, queue);
+        setContactContents(v, queue);
+//        setPhoneContent(v, com);
+//        setEmailContent(v, com);
+//        setWebContent(v, com);
     }
 
     private void setBasicContent(View v, Company com) {
@@ -60,27 +76,24 @@ public class ContactsFragment extends PlaceHolderFragment {
         companyDIC.setText(getString(R.string.DIC_label) + " " + com.getDIC());
     }
 
-    private void setAddressContent(View rootView, final Company com) {
+    private void setAddressContent(View rootView, RequestQueue queue) {
         LinearLayout block = (LinearLayout) rootView.findViewById(R.id.addressBlock);
         TextView title = (TextView) block.findViewById(R.id.title_blockContact);
         title.setText(getString(R.string.address_sectionTitle));
         ImageButton icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
         icon.setImageResource(R.drawable.ic_map);
         TextView address = (TextView) block.findViewById(R.id.info_blockContact);
-        // TODO change to sth better, like list view?
-        address.setText(String.format("%s\n%s, %s", com.getAddress(),
-                com.getZip(), com.getCity()));
+        requestAddress(address, queue);
 
-        // start Google Maps to show address on map
-        icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String uri = String.format(new Locale("cs", "CZ"), "geo:0,0q=%s, %s",
-                        com.getAddress(), com.getCity());
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                getActivity().startActivity(intent);
-            }
-        });
+        // start Google Maps to show directions TODO must be async, add to requestAddress!
+//        icon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String uri = "http://maps.google.com/maps?daddr=" + com.getAddress() + ",+" + com.getCity();
+//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+//                getActivity().startActivity(intent);
+//            }
+//        });
     }
 
     private void setPhoneContent(View rootView, final Company com) {
@@ -92,20 +105,19 @@ public class ContactsFragment extends PlaceHolderFragment {
         TextView numbers = (TextView) block.findViewById(R.id.info_blockContact);
         String phoneNumbers = "";
         ArrayList<String> numb = com.getPhoneNumbers();
-        // TODO change to sth better, like list view?
         for (int i = 0; i < numb.size(); i++) {
             phoneNumbers += numb.get(i) + (i == numb.size() - 1 ? "" : "\n");
         }
         numbers.setText(phoneNumbers);
 
-        icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String uri = String.format("tel:%s", com.getPhoneNumbers().get(0)); // TODO show dialog to choose number
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(uri));
-                getActivity().startActivity(intent);
-            }
-        });
+//        icon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String uri = String.format("tel:%s", com.getPhoneNumbers().get(0));
+//                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(uri));
+//                getActivity().startActivity(intent);
+//            }
+//        });
     }
 
     private void setEmailContent(View rootView, final Company com) {
@@ -122,14 +134,14 @@ public class ContactsFragment extends PlaceHolderFragment {
         }
         emails.setText(addresses);
 
-        icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String uri = String.format("mailto:%s", com.getEmails().get(0)); // TODO show dialog to choose address
-                Intent intent = new Intent(Intent.ACTION_SEND, Uri.parse(uri));
-                getActivity().startActivity(intent);
-            }
-        });
+//        icon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String uri = String.format("mailto:%s", com.getEmails().get(0));
+//                Intent intent = new Intent(Intent.ACTION_SEND, Uri.parse(uri));
+//                getActivity().startActivity(intent);
+//            }
+//        });
     }
 
     private void setWebContent(View rootView, final Company com) {
@@ -141,14 +153,101 @@ public class ContactsFragment extends PlaceHolderFragment {
         TextView web = (TextView) block.findViewById(R.id.info_blockContact);
         web.setText(com.getWebAddress());
 
-        icon.setOnClickListener(new View.OnClickListener() {
+//        icon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String uri = com.getWebAddress();
+//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+//                getActivity().startActivity(intent);
+//            }
+//        });
+    }
+
+    private void setContactContents(View rootView, RequestQueue queue) {
+        // PHONE NUMBER
+        LinearLayout block = (LinearLayout) rootView.findViewById(R.id.phoneBlock);
+        TextView title = (TextView) block.findViewById(R.id.title_blockContact);
+        ImageButton icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
+        title.setText(getString(R.string.phone_sectionTitle));
+        icon.setImageResource(R.drawable.ic_phone);
+        TextView phoneView = (TextView) block.findViewById(R.id.info_blockContact);
+        // E-MAIL ADDRESS
+        block = (LinearLayout) rootView.findViewById(R.id.emailBlock);
+        title = (TextView) block.findViewById(R.id.title_blockContact);
+        icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
+        title.setText(getString(R.string.email_sectionTitle));
+        icon.setImageResource(R.drawable.ic_email);
+        TextView emailView = (TextView) block.findViewById(R.id.info_blockContact);
+        // WEB ADDRESS
+        block = (LinearLayout) rootView.findViewById(R.id.webBlock);
+        title = (TextView) block.findViewById(R.id.title_blockContact);
+        icon = (ImageButton) block.findViewById(R.id.contact_imgButton);
+        title.setText(getString(R.string.web_sectionTitle));
+        icon.setImageResource(R.drawable.ic_web);
+        TextView webView = (TextView) block.findViewById(R.id.info_blockContact);
+
+        requestContacts(phoneView, emailView, webView, queue);
+    }
+
+    private void requestAddress(final TextView addressView, RequestQueue queue) {
+        String url = String.format(
+                getString(R.string.requestAddresses),
+                getActivity().getIntent().getLongExtra("id", 0));
+        CustomJsonArrayRequest request = new CustomJsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
-            public void onClick(View view) {
-                String uri = com.getWebAddress(); // TODO show dialog to choose web address
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                getActivity().startActivity(intent);
+            public void onResponse(JSONArray response) {
+                try {
+                    JSONObject jsonAddress = response.getJSONObject(0);
+                    addressView.setText(jsonAddress.optString("valueTxt"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), getString(R.string.serverError), Toast.LENGTH_LONG).show();
             }
         });
+        queue.add(request);
+    }
+
+    private void requestContacts(final TextView phoneView, final TextView emailView,
+                                 final TextView webView, RequestQueue queue) {
+        String url = String.format(getString(R.string.requestContacts),
+                getActivity().getIntent().getLongExtra("id", 0));
+        CustomJsonArrayRequest request = new CustomJsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                String address = "";
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject contact = response.getJSONObject(i);
+                        switch (contact.optString("typeTxt")) {
+                            case "Telefon":
+                                phoneView.setText(contact.optString("valueTxt"));
+                                break;
+                            case "E-mail":
+                                address = contact.optString("valueTxt");
+                                emailView.setText(address.substring(3, address.length() - 1));
+                                break;
+                            case "www":
+                                address = contact.optString("valueTxt");
+                                webView.setText(address.substring(3, address.length() - 1));
+                                break;
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), getString(R.string.serverError), Toast.LENGTH_LONG).show();
+            }
+        });
+        queue.add(request);
     }
 
     public void setListeners(Company com, View rootView) {

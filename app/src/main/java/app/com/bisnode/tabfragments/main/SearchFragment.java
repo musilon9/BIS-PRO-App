@@ -72,7 +72,7 @@ public class SearchFragment extends PlaceHolderFragment {
             {
                 RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-                String url = "https://gnosus.bisnode.cz/magnusweb-rest/query/simple/subject.fulltext?q=" + queryField.getText();
+                String url = getString(R.string.requestSearch) + queryField.getText();
 
                 CustomJsonArrayRequest jsObjRequest = new CustomJsonArrayRequest
                         (url, new Response.Listener<JSONArray>() {

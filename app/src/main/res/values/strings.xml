@@ -49,6 +49,7 @@
 
     <string name="dummyLogin">foo@example.com</string>
     <string name="placeholderString">Placeholder</string>
+    <string name="loadingString">Načítám data&#8230;</string>
     <string name="imageButtonDescription">Super ikonka</string>
 
     <string name="hello_world">Hello world!</string>
@@ -56,5 +57,22 @@
     <string name="two">Two</string>
     <string name="three">Three</string>
     <string name="logged">Zůstat přihlášen</string>
+
+    <!-- HTTP request URLs -->
+    <string name="requestSearch">https://gnosus.bisnode.cz/magnusweb-rest/query/simple/subject.fulltext?q=</string>
+    <string name="requestIndicators">https://gnosus.bisnode.cz/magnusweb-rest/query/simple/gnosus_report.indicators?ent_id=%d&amp;lang=CZ</string>
+    <string name="requestID">https://gnosus.bisnode.cz/magnusweb-rest/query/simple/gnosus_report.identification?level=10&amp;inac_ind=00&amp;ent_id=%d&amp;lang=CZ</string>
+    <string name="requestRegInfo">https://gnosus.bisnode.cz/magnusweb-rest/query/simple/gnosus_report.reg_info?level=10&amp;inac_ind=00&amp;ent_id=%d&amp;lang=CZ</string>
+    <string name="requestContacts">https://gnosus.bisnode.cz/magnusweb-rest/query/simple/gnosus_report.contacts?level=10&amp;ent_id=%d&amp;lang=CZ</string>
+    <string name="requestAddresses">https://gnosus.bisnode.cz/magnusweb-rest/query/simple/gnosus_report.addresses?level=10&amp;inac_ind=00&amp;ent_id=%d&amp;lang=CZ</string>
+    <string name="requestSize">https://gnosus.bisnode.cz/magnusweb-rest/query/simple/gnosus_report.velikost?ent_id=%d&amp;lang=CZ</string>
+    <string name="requestActivities">https://gnosus.bisnode.cz/magnusweb-rest/query/simple/gnosus_report.activities?ent_id=%d&amp;lang=CZ</string>
+    <string name="requestPeople">https://gnosus.bisnode.cz/magnusweb-rest/query/simple/gnosus_report.company_board?inac_ind=00&amp;ent_id=%d&amp;lang=CZ</string>
+
+    <!-- JSON Objects identification -->
+    <string name="jsonContactPhone">Telefon</string>
+    <string name="jsonContactEmail">E-mail</string>
+    <string name="jsonContactWeb">www</string>
+
 
 </resources>
