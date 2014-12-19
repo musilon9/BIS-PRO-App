@@ -132,10 +132,10 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         TextView paymentIndex = (TextView) v.findViewById(R.id.indexValue);
         TextView scoringDesc = (TextView) v.findViewById(R.id.scoringDescription);
         TextView indexDesc = (TextView) v.findViewById(R.id.indexDescription);
-        requestIndicators(scoring, paymentIndex, scoringDesc, indexDesc, queue);
+        requestIndicators(v, scoring, paymentIndex, scoringDesc, indexDesc, queue);
     }
 
-    private void requestIndicators(final TextView scoring, final TextView paymentIndex,
+    private void requestIndicators(final View v, final TextView scoring, final TextView paymentIndex,
                                    final TextView scoringDesc, final TextView indexDesc, RequestQueue queue) {
 
         String url = String.format(
@@ -154,6 +154,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
                     paymentIndex.setText(Integer.toString(indexValue));
                     setIndexColor(paymentIndex, indexValue);
                     indexDesc.setText(indicators.optString(getString(R.string.jsonFieldPaymentIndexDesc)));
+                    checkNegativeIndicators(v, indicators);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -165,6 +166,40 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
             }
         });
         queue.add(request);
+    }
+
+    private void checkNegativeIndicators(View v, JSONObject indicators) {
+        int sum = 0;
+        int[] indicatorFields = new int[] {R.string.jsonFieldNegInsolvence, R.string.jsonFieldNegInsolvenceHis,
+                R.string.jsonFieldNegExekuce, R.string.jsonFieldNegExekuceHis,
+                R.string.jsonFieldNegLikvidace, R.string.jsonFieldNegLikvidaceeHis,
+                R.string.jsonFieldNegNespPlatce, R.string.jsonFieldNegNespPlatceHis,
+                R.string.jsonFieldNegDluhy, R.string.jsonFieldNegDluhyHis,
+        };
+        LinearLayout[] indicatorLines = new LinearLayout[] {
+                (LinearLayout) v.findViewById(R.id.indicator_Insolvence),
+                (LinearLayout) v.findViewById(R.id.indicator_Exekuce),
+                (LinearLayout) v.findViewById(R.id.indicator_Likvidace),
+                (LinearLayout) v.findViewById(R.id.indicator_NespPlatce),
+                (LinearLayout) v.findViewById(R.id.indicator_Dluhy),
+                (LinearLayout) v.findViewById(R.id.indicator_OK)
+        };
+        for (int i = 0; i < indicatorFields.length; i++) {
+            int count = indicators.optInt(getString(indicatorFields[i]));
+            if (count > 0) {
+                sum += count;
+                indicatorLines[i/2].setVisibility(View.VISIBLE);
+            }
+        }
+        if (sum == 0) {
+            LinearLayout ok = indicatorLines[5];
+            ok.setVisibility(View.VISIBLE);
+            ImageView icon = (ImageView) ok.findViewById(R.id.indicatorIcon);
+            icon.setImageResource(R.drawable.indicator_ok);
+            TextView text = (TextView) ok.findViewById(R.id.indicatorText);
+            text.setText(R.string.noNegatives);
+            text.setTextSize(16);
+        }
     }
 
     private void setIndexColor(TextView tv, int index) {

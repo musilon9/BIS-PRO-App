@@ -53,7 +53,7 @@
                 android:layout_weight="0.5"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="50sp"
-                android:text="XYZ"
+                android:text="@string/placeholderShort"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/scoringValue" />
 
@@ -63,7 +63,7 @@
                 android:layout_weight="0.5"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="50sp"
-                android:text="XYZ"
+                android:text="@string/placeholderShort"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/indexValue" />
 
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="XYZ"
+                android:text="@string/placeholderShort"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/scoringDescription" />
 
@@ -89,11 +89,29 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="XYZ"
+                android:text="@string/placeholderShort"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/indexDescription" />
 
         </LinearLayout>
+
+        <include layout="@layout/indicator"
+        android:id="@+id/indicator_OK"/>
+
+        <include layout="@layout/indicator"
+            android:id="@+id/indicator_Insolvence"/>
+
+        <include layout="@layout/indicator"
+            android:id="@+id/indicator_Exekuce"/>
+
+        <include layout="@layout/indicator"
+            android:id="@+id/indicator_NespPlatce"/>
+
+        <include layout="@layout/indicator"
+            android:id="@+id/indicator_Likvidace"/>
+
+        <include layout="@layout/indicator"
+            android:id="@+id/indicator_Dluhy"/>
 
         <include layout="@layout/block_four_pieces"
             android:id="@+id/turnoverBlock"/>
