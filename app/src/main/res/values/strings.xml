@@ -34,16 +34,6 @@
     <string name="turnover_sectionTitle">Obrat firmy</string>
     <string name="employees_sectionTitle">Počet zaměstnanců</string>
 
-    <string name="payment0">Platí včas</string>
-    <string name="payment1">Platí těsně po splatnosti</string>
-    <string name="payment2">Platí krátce po splatnosti</string>
-    <string name="payment3">Platí průměrně</string>
-    <string name="payment4">Platí uspokojivě</string>
-    <string name="payment5">Platí pozdě</string>
-    <string name="payment6">Platí velmi pozdě</string>
-    <string name="payment7">Platí extrémně pozdě</string>
-    <string name="payment8">Riziko nezaplacení</string>
-
     <string name="loginHelp">Můžete se přihlásit pomocí Login: foo@example.com Password: hello</string>
     <string name="serverError">Nepodařilo se připojit k serveru. Prosím zkontrolujte připojení a zkuste akci zopakovat.</string>
 
@@ -77,11 +67,19 @@
     <string name="jsonIdDIC">DIČ</string>
     <string name="jsonIdCompType">Právní forma</string>
     <string name="jsonIdCompDPH">Plátce DPH</string>
+
     <string name="labelSince">od roku</string>
+    <string name="czechRepublic">Česká republika</string>
 
     <!-- JSON Fields -->
     <string name="jsonFieldType">typeTxt</string>
     <string name="jsonFieldValue">valueTxt</string>
     <string name="jsonFieldStartDate">strtDt</string>
+    <string name="jsonFieldScoringCode">bisnodeScoringCode</string>
+    <string name="jsonFieldScoringDesc">bisnodeScoringDesc</string>
+    <string name="jsonFieldPaymentIndex">paymentIndex</string>
+    <string name="jsonFieldPaymentIndexDesc">paymentIndexLightDesc</string>
+
+
 
 </resources>

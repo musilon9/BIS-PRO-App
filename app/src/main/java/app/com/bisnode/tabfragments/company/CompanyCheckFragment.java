@@ -1,7 +1,9 @@
 package app.com.bisnode.tabfragments.company;
 
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +11,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import app.com.bisnode.R;
 import app.com.bisnode.fakedata.FakeSearch;
 import app.com.bisnode.objects.Company;
 import app.com.bisnode.objects.Scoring;
+import app.com.bisnode.requests.CustomJsonArrayRequest;
 import app.com.bisnode.tabfragments.PlaceHolderFragment;
 
 public class CompanyCheckFragment extends PlaceHolderFragment {
@@ -38,11 +51,18 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         View rootView = inflater.inflate(R.layout.fragment_company_check, container, false);
         Company com = FakeSearch.getExample();
 
-        setIndicatorsContent(rootView, com);
+//        setIndicatorsContent(rootView, com);
         setTurnoverContent(rootView, com);
         setEmployeesContent(rootView, com);
 
+        setContents(rootView);
+
         return rootView;
+    }
+
+    private void setContents(View v) {
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        setIndicatorsContent(v, queue);
     }
 
     private void setEmployeesContent(View rootView, Company com) {
@@ -107,17 +127,44 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
             trend.setImageResource(R.drawable.ic_arrow_down);
     }
 
-    private void setIndicatorsContent(View v, Company com) {
+    private void setIndicatorsContent(View v, RequestQueue queue) {
         TextView scoring = (TextView) v.findViewById(R.id.scoringValue);
-        scoring.setText(com.getScoring().toString());
-        scoring.setTextColor(Color.parseColor(com.getScoring().getColorCode()));
         TextView paymentIndex = (TextView) v.findViewById(R.id.indexValue);
-        paymentIndex.setText(String.format("%d", com.getPaymentIndex()));
-        setIndexColor(paymentIndex, com.getPaymentIndex());
         TextView scoringDesc = (TextView) v.findViewById(R.id.scoringDescription);
-        scoringDesc.setText(com.getScoring().getDescription());
         TextView indexDesc = (TextView) v.findViewById(R.id.indexDescription);
-        setIndexDescription(indexDesc, com.getPaymentIndex());
+        requestIndicators(scoring, paymentIndex, scoringDesc, indexDesc, queue);
+    }
+
+    private void requestIndicators(final TextView scoring, final TextView paymentIndex,
+                                   final TextView scoringDesc, final TextView indexDesc, RequestQueue queue) {
+
+        String url = String.format(
+                getString(R.string.requestIndicators),
+                getActivity().getIntent().getLongExtra("id", 0));
+        CustomJsonArrayRequest request = new CustomJsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    JSONObject indicators = response.getJSONObject(0);
+                    String scoringValue = indicators.optString(getString(R.string.jsonFieldScoringCode));
+                    int indexValue = indicators.optInt(getString(R.string.jsonFieldPaymentIndex));
+                    scoring.setText(scoringValue);
+                    scoring.setTextColor(Color.parseColor(Scoring.valueOf(scoringValue).getColorCode()));
+                    scoringDesc.setText(indicators.optString(getString(R.string.jsonFieldScoringDesc)));
+                    paymentIndex.setText(Integer.toString(indexValue));
+                    setIndexColor(paymentIndex, indexValue);
+                    indexDesc.setText(indicators.optString(getString(R.string.jsonFieldPaymentIndexDesc)));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), getString(R.string.serverError), Toast.LENGTH_LONG).show();
+            }
+        });
+        queue.add(request);
     }
 
     private void setIndexColor(TextView tv, int index) {
@@ -130,18 +177,6 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         else if (index < 91) tv.setTextColor(Color.parseColor(Scoring.C.getColorCode()));
         else if (index < 121) tv.setTextColor(Color.parseColor(Scoring.C.getColorCode()));
         else tv.setTextColor(Color.parseColor(Scoring.D.getColorCode()));
-    }
-
-    private void setIndexDescription(TextView tv, int index) {
-        if (index < 1) tv.setText(R.string.payment0);
-        else if (index < 5) tv.setText(R.string.payment1);
-        else if (index < 11) tv.setText(R.string.payment2);
-        else if (index < 21) tv.setText(R.string.payment3);
-        else if (index < 31) tv.setText(R.string.payment4);
-        else if (index < 61) tv.setText(R.string.payment5);
-        else if (index < 91) tv.setText(R.string.payment6);
-        else if (index < 121) tv.setText(R.string.payment7);
-        else tv.setText(R.string.payment8);
     }
 
 }

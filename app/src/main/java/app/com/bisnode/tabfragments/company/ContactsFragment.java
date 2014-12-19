@@ -51,20 +51,15 @@ public class ContactsFragment extends PlaceHolderFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
-        Company com = FakeSearch.getExample();
-        setListeners(com, rootView);
-        setContents(rootView, com);
+        setContents(rootView);
         return rootView;
     }
 
-    private void setContents(View v, Company com) {
+    private void setContents(View v) {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         setBasicContent(v, queue);
         setAddressContent(v, queue);
         setContactContents(v, queue);
-//        setPhoneContent(v, com);
-//        setEmailContent(v, com);
-//        setWebContent(v, com);
     }
 
     private void setBasicContent(View v, RequestQueue queue) {
@@ -86,16 +81,6 @@ public class ContactsFragment extends PlaceHolderFragment {
         icon.setImageResource(R.drawable.ic_map);
         TextView address = (TextView) block.findViewById(R.id.info_blockContact);
         requestAddress(address, block, icon, queue);
-
-        // start Google Maps to show directions TODO must be async, add to requestAddress!
-//        icon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String uri = "http://maps.google.com/maps?daddr=" + com.getAddress() + ",+" + com.getCity();
-//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-//                getActivity().startActivity(intent);
-//            }
-//        });
     }
 
     private void setContactContents(View rootView, RequestQueue queue) {
@@ -201,7 +186,10 @@ public class ContactsFragment extends PlaceHolderFragment {
                 try {
                     JSONObject jsonAddress = response.getJSONObject(0);
                     final String value = jsonAddress.optString(getString(R.string.jsonFieldValue));
-                    addressView.setText(value);
+                    String[] lines = value.split(", ");
+                    String addressToDisplay = lines[0] + "\n" + lines[1] + ", " + lines[2];
+                    if (! lines[3].equals(getString(R.string.czechRepublic))) addressToDisplay += "\n" + lines[3];
+                    addressView.setText(addressToDisplay);
                     addressBlock.setVisibility(View.VISIBLE);
                     mapIcon.setOnClickListener(new View.OnClickListener() {
                         @Override

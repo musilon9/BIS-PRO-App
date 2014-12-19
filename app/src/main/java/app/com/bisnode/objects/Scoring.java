@@ -1,17 +1,17 @@
 package app.com.bisnode.objects;
 
 public enum Scoring {
-    AAA("Minimální riziko", "#7ba641"),
-    AA("Velmi nízké riziko", "#a0b73b"),
-    A("Nízké riziko", "#c7c31"),
-    BBB("Střední riziko", "#e7d927"),
-    BB("Akceptovatelné riziko", "#ffe820"),
-    B("Zvýšené riziko", "#ffad00"),
-    CCC("Vysoké riziko", "#ff7200"),
-    CC("Velmi vysoké riziko", "#ff3600"),
-    C("Extrémně vysoké riziko", "#fb0000"),
-    D("Úpadek", "#920001f"),
-    NA("Nehodnoceno", "c0c0c0");
+    AAA("Minimální riziko", "#88a942"),
+    AA("Velmi nízké riziko", "#a6ba38"),
+    A("Nízké riziko", "#c4c92e"),
+    BBB("Střední riziko", "#e1d923"),
+    BB("Akceptovatelné riziko", "#ffe81a"),
+    B("Zvýšené riziko", "#f8b51a"),
+    CCC("Vysoké riziko", "#f1811a"),
+    CC("Velmi vysoké riziko", "#ea4e1a"),
+    C("Extrémně vysoké riziko", "#e31a1a"),
+    D("Úpadek", "#861a2b"),
+    NA("Nehodnoceno", "c3c3c3");
 
     private String description;
     private String colorCode;
