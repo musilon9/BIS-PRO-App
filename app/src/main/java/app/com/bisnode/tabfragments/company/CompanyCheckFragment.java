@@ -176,6 +176,8 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
                 R.string.jsonFieldNegNespPlatce, R.string.jsonFieldNegNespPlatceHis,
                 R.string.jsonFieldNegDluhy, R.string.jsonFieldNegDluhyHis,
         };
+        int[] indicatorLabels = new int[] {R.string.indicatorInsolvence, R.string.indicatorExekuce,
+            R.string.indicatorLikvidace, R.string.indicatorNespPlatce, R.string.indicatorDluhy};
         LinearLayout[] indicatorLines = new LinearLayout[] {
                 (LinearLayout) v.findViewById(R.id.indicator_Insolvence),
                 (LinearLayout) v.findViewById(R.id.indicator_Exekuce),
@@ -184,11 +186,23 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
                 (LinearLayout) v.findViewById(R.id.indicator_Dluhy),
                 (LinearLayout) v.findViewById(R.id.indicator_OK)
         };
-        for (int i = 0; i < indicatorFields.length; i++) {
-            int count = indicators.optInt(getString(indicatorFields[i]));
-            if (count > 0) {
-                sum += count;
-                indicatorLines[i/2].setVisibility(View.VISIBLE);
+        for (int i = 0; i < indicatorFields.length; i += 2) {
+            int currentCount = indicators.optInt(getString(indicatorFields[i]));
+            int historicalCount = indicators.optInt(getString(indicatorFields[i+1]));
+            LinearLayout neg = indicatorLines[i/2];
+            TextView text = (TextView) neg.findViewById(R.id.indicatorText);
+            if (i == 6) text.setTextSize(16); // nespolehlivy platce DPH is too long
+            if (currentCount > 0) {
+                sum += currentCount;
+                neg.setVisibility(View.VISIBLE);
+                text.setText(String.format("%s (%d)", getString(indicatorLabels[i/2]), currentCount));
+            } else if (historicalCount > 0) {
+                sum += historicalCount;
+                neg.setVisibility(View.VISIBLE);
+                ImageView icon = (ImageView) neg.findViewById(R.id.indicatorIcon);
+                icon.setImageResource(R.drawable.indicator_his);
+                text.setText(String.format("%s (%s)", getString(indicatorLabels[i/2]), getString(R.string.historical)));
+                text.setTextSize(16);
             }
         }
         if (sum == 0) {

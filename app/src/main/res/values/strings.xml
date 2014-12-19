@@ -36,7 +36,7 @@
 
     <string name="loginHelp">Můžete se přihlásit pomocí Login: foo@example.com Password: hello</string>
     <string name="serverError">Nepodařilo se připojit k serveru. Prosím zkontrolujte připojení a zkuste akci zopakovat.</string>
-    <string name="noNegatives">Žádné negativní indikátory</string>
+
 
     <string name="dummyLogin">foo@example.com</string>
     <string name="placeholderString">Placeholder</string>
@@ -92,5 +92,13 @@
     <string name="jsonFieldNegDluhy">dluhyAktivni</string>
     <string name="jsonFieldNegDluhyHis">dluhyHistoricke</string>
 
+    <!-- Indicators description -->
+    <string name="indicatorInsolvence">Insolvence</string>
+    <string name="indicatorExekuce">Exekuce</string>
+    <string name="indicatorNespPlatce">Nespolehlivý plátce DPH</string>
+    <string name="indicatorLikvidace">Likvidace</string>
+    <string name="indicatorDluhy">Dluhy</string>
+    <string name="noNegatives">Žádné negativní indikátory</string>
+    <string name="historical">historické</string>
 
 </resources>
