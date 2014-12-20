@@ -72,11 +72,18 @@
 
     <string name="labelSince">od roku</string>
     <string name="czechRepublic">Česká republika</string>
+    <string name="labelYear">Rok</string>
+
 
     <!-- JSON Fields -->
     <string name="jsonFieldType">typeTxt</string>
     <string name="jsonFieldValue">valueTxt</string>
     <string name="jsonFieldStartDate">strtDt</string>
+    <string name="jsonFieldYear">year</string>
+    <string name="jsonFieldTurnover">turnover</string>
+    <string name="jsonFieldEmployeeCount">emplCnt</string>
+    <string name="jsonFieldCapital">regCapl</string>
+    <string name="jsonFieldCurrency">regCaplCrcy</string>
     <string name="jsonFieldScoringCode">bisnodeScoringCode</string>
     <string name="jsonFieldScoringDesc">bisnodeScoringDesc</string>
     <string name="jsonFieldPaymentIndex">paymentIndex</string>
@@ -100,5 +107,10 @@
     <string name="indicatorDluhy">Dluhy</string>
     <string name="noNegatives">Žádné negativní indikátory</string>
     <string name="historical">historické</string>
+
+    <!-- Financial values description -->
+    <string name="suffix_thousand">tis.</string>
+    <string name="suffix_million">mil.</string>
+    <string name="suffix_billion">mld.</string>
 
 </resources>

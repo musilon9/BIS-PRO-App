@@ -45,38 +45,39 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"
+            android:layout_weight="5"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"
             android:text="@string/placeholderString"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/label_blockFour_1A" />
+            android:id="@+id/label_year" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"
+            android:layout_weight="4"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/placeholderString"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/info_blockFour_1A" />
+            android:id="@+id/year1" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"
+            android:layout_weight="4"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/placeholderString"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/label_blockFour_1B" />
+            android:id="@+id/year2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"
+            android:layout_weight="4"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/placeholderString"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/info_blockFour_1B" />
+            android:id="@+id/year3" />
 
     </LinearLayout>
 
@@ -89,38 +90,39 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"
+            android:layout_weight="5"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"
             android:text="@string/placeholderString"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/label_blockFour_2A" />
+            android:id="@+id/label_value" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"
+            android:layout_weight="4"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/placeholderString"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/info_blockFour_2A" />
+            android:id="@+id/value1" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"
+            android:layout_weight="4"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/placeholderString"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/label_blockFour_2B" />
+            android:id="@+id/value2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"
+            android:layout_weight="4"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/placeholderString"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/info_blockFour_2B" />
+            android:id="@+id/value3" />
 
     </LinearLayout>
 

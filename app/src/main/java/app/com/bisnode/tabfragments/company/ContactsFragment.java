@@ -4,7 +4,6 @@ package app.com.bisnode.tabfragments.company;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import app.com.bisnode.R;
-import app.com.bisnode.fakedata.FakeSearch;
 import app.com.bisnode.objects.Company;
 import app.com.bisnode.onclicklisteners.DatabaseHandler;
 import app.com.bisnode.requests.CustomJsonArrayRequest;
@@ -51,18 +47,18 @@ public class ContactsFragment extends PlaceHolderFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
-        setContents(rootView);
+        displayContents(rootView);
         return rootView;
     }
 
-    private void setContents(View v) {
+    private void displayContents(View v) {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        setBasicContent(v, queue);
-        setAddressContent(v, queue);
-        setContactContents(v, queue);
+        displayRegistrationInfo(v, queue);
+        displayAdress(v, queue);
+        displayContacts(v, queue);
     }
 
-    private void setBasicContent(View v, RequestQueue queue) {
+    private void displayRegistrationInfo(View v, RequestQueue queue) {
         TextView companyName = (TextView) v.findViewById(R.id.companyName);
         companyName.setText(getActivity().getIntent().getStringExtra("name"));
         TextView companyICO = (TextView) v.findViewById(R.id.companyICO);
@@ -73,7 +69,7 @@ public class ContactsFragment extends PlaceHolderFragment {
         requestCompanyType(companyType, companyDPH, queue);
     }
 
-    private void setAddressContent(View rootView, RequestQueue queue) {
+    private void displayAdress(View rootView, RequestQueue queue) {
         LinearLayout block = (LinearLayout) rootView.findViewById(R.id.addressBlock);
         TextView title = (TextView) block.findViewById(R.id.title_blockContact);
         title.setText(getString(R.string.address_sectionTitle));
@@ -83,7 +79,7 @@ public class ContactsFragment extends PlaceHolderFragment {
         requestAddress(address, block, icon, queue);
     }
 
-    private void setContactContents(View rootView, RequestQueue queue) {
+    private void displayContacts(View rootView, RequestQueue queue) {
         // PHONE NUMBER
         LinearLayout phoneBlock = (LinearLayout) rootView.findViewById(R.id.phoneBlock);
         ImageButton phoneIcon = (ImageButton) phoneBlock.findViewById(R.id.contact_imgButton);

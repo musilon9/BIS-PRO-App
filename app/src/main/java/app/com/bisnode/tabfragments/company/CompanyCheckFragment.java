@@ -1,9 +1,7 @@
 package app.com.bisnode.tabfragments.company;
 
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +19,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.TreeMap;
 
 import app.com.bisnode.R;
 import app.com.bisnode.fakedata.FakeSearch;
@@ -49,11 +50,6 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_company_check, container, false);
-        Company com = FakeSearch.getExample();
-
-//        setIndicatorsContent(rootView, com);
-        setTurnoverContent(rootView, com);
-        setEmployeesContent(rootView, com);
 
         setContents(rootView);
 
@@ -63,68 +59,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
     private void setContents(View v) {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         setIndicatorsContent(v, queue);
-    }
-
-    private void setEmployeesContent(View rootView, Company com) {
-        LinearLayout block = (LinearLayout) rootView.findViewById(R.id.employeesBlock);
-        TextView[] labels = new TextView[] {
-                (TextView) block.findViewById(R.id.label_blockFour_1A),
-                (TextView) block.findViewById(R.id.label_blockFour_2A),
-                (TextView) block.findViewById(R.id.label_blockFour_1B),
-                (TextView) block.findViewById(R.id.label_blockFour_2B)
-        };
-        TextView[] values = new TextView[] {
-                (TextView) block.findViewById(R.id.info_blockFour_1A),
-                (TextView) block.findViewById(R.id.info_blockFour_2A),
-                (TextView) block.findViewById(R.id.info_blockFour_1B),
-                (TextView) block.findViewById(R.id.info_blockFour_2B)
-        };
-
-        TextView title = (TextView) block.findViewById(R.id.title_blockFour);
-        title.setText(R.string.employees_sectionTitle);
-
-        int startYear = com.getEmployees().firstKey();
-        for (int i = 0; i < labels.length; i++) {
-            labels[i].setText(String.format("%d", startYear + i));
-            values[i].setText(String.format("%d",
-                    com.getEmployees().get(startYear + i)));
-        }
-
-        ImageView trend = (ImageView) block.findViewById(R.id.trendArrow);
-        if (com.getEmployees().get(startYear + labels.length - 1) <
-                com.getEmployees().get(startYear + labels.length - 2))
-            trend.setImageResource(R.drawable.ic_arrow_down);
-    }
-
-    private void setTurnoverContent(View rootView, Company com) {
-        LinearLayout block = (LinearLayout) rootView.findViewById(R.id.turnoverBlock);
-        TextView[] labels = new TextView[] {
-                (TextView) block.findViewById(R.id.label_blockFour_1A),
-                (TextView) block.findViewById(R.id.label_blockFour_2A),
-                (TextView) block.findViewById(R.id.label_blockFour_1B),
-                (TextView) block.findViewById(R.id.label_blockFour_2B)
-        };
-        TextView[] values = new TextView[] {
-                (TextView) block.findViewById(R.id.info_blockFour_1A),
-                (TextView) block.findViewById(R.id.info_blockFour_2A),
-                (TextView) block.findViewById(R.id.info_blockFour_1B),
-                (TextView) block.findViewById(R.id.info_blockFour_2B)
-        };
-
-        TextView title = (TextView) block.findViewById(R.id.title_blockFour);
-        title.setText(R.string.turnover_sectionTitle);
-
-        int startYear = com.getTurnover().firstKey();
-        for (int i = 0; i < labels.length; i++) {
-            labels[i].setText(String.format("%d", startYear + i));
-            values[i].setText(String.format("%d",
-                    com.getTurnover().get(startYear + i) / 1000) + " mil.");
-        }
-
-        ImageView trend = (ImageView) block.findViewById(R.id.trendArrow);
-        if (com.getTurnover().get(startYear + labels.length - 1) <
-                com.getTurnover().get(startYear + labels.length - 2))
-            trend.setImageResource(R.drawable.ic_arrow_down);
+        requestCompanySize(v, queue);
     }
 
     private void setIndicatorsContent(View v, RequestQueue queue) {
@@ -191,7 +126,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
             int historicalCount = indicators.optInt(getString(indicatorFields[i+1]));
             LinearLayout neg = indicatorLines[i/2];
             TextView text = (TextView) neg.findViewById(R.id.indicatorText);
-            if (i == 6) text.setTextSize(16); // nespolehlivy platce DPH is too long
+            if (i == 6) text.setTextSize(16); // "nespolehlivy platce DPH" is too long
             if (currentCount > 0) {
                 sum += currentCount;
                 neg.setVisibility(View.VISIBLE);
@@ -202,7 +137,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
                 ImageView icon = (ImageView) neg.findViewById(R.id.indicatorIcon);
                 icon.setImageResource(R.drawable.indicator_his);
                 text.setText(String.format("%s (%s)", getString(indicatorLabels[i/2]), getString(R.string.historical)));
-                text.setTextSize(16);
+                text.setTextSize(16); // too long text
             }
         }
         if (sum == 0) {
@@ -214,6 +149,69 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
             text.setText(R.string.noNegatives);
             text.setTextSize(16);
         }
+    }
+
+    private void requestCompanySize(final View v, RequestQueue queue) {
+        String url = String.format(
+                getString(R.string.requestSize),
+                getActivity().getIntent().getLongExtra("id", 0));
+        final TreeMap<Integer, Long> turnover = new TreeMap<>();
+        final TreeMap<Integer, Integer> employeeCount = new TreeMap<>();
+        final TreeMap<Integer, Long> capital = new TreeMap<>();
+        CustomJsonArrayRequest request = new CustomJsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject yearObject = response.getJSONObject(i);
+                        int year = Integer.parseInt(yearObject.optString(getString(R.string.jsonFieldYear)));
+                        turnover.put(year, yearObject.optLong(getString(R.string.jsonFieldTurnover)));
+                        employeeCount.put(year, yearObject.optInt(getString(R.string.jsonFieldEmployeeCount)));
+                        capital.put(year, yearObject.optLong(getString(R.string.jsonFieldCapital)));
+                    }
+                    displayTurnover(v, turnover, response.getJSONObject(0).optString(getString(R.string.jsonFieldCurrency)));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), getString(R.string.serverError), Toast.LENGTH_LONG).show();
+            }
+        });
+        queue.add(request);
+    }
+
+    private void displayTurnover(View v, TreeMap<Integer, Long> turnover, String currency) {
+        LinearLayout block = (LinearLayout) v.findViewById(R.id.turnoverBlock);
+        TextView[] years = new TextView[] {(TextView) block.findViewById(R.id.year1),
+                (TextView) block.findViewById(R.id.year2), (TextView) block.findViewById(R.id.year3)};
+        TextView[] values = new TextView[] {(TextView) block.findViewById(R.id.value1),
+                (TextView) block.findViewById(R.id.value2), (TextView) block.findViewById(R.id.value3)};
+        int i = 2;  // last index
+        for (int y: turnover.descendingKeySet()) {
+            years[i].setText(Integer.toString(y));
+            values[i].setText(readableTurnover(turnover.get(y)));
+            i--;
+            if (i < 0) break;
+        }
+        TextView title = (TextView) block.findViewById(R.id.title_blockFour);
+        title.setText(R.string.turnover_sectionTitle);
+        TextView yearLabel = (TextView) block.findViewById(R.id.label_year);
+        yearLabel.setText(R.string.labelYear);
+        TextView currencyLabel = (TextView) block.findViewById(R.id.label_value);
+        currencyLabel.setText(currency);
+    }
+
+    private String readableTurnover(long value) {
+        if (value < 999499) return String.format("%d %s", (value+500)/1000, getString(R.string.suffix_thousand));
+        else if (value < 9994999) return String.format("%.2f %s", (double)value/1000000, getString(R.string.suffix_million));
+        else if (value < 99949999) return String.format("%.1f %s", (double)value/1000000, getString(R.string.suffix_million));
+        else if (value < 999499999) return String.format("%d %s", (value+500000)/1000000, getString(R.string.suffix_million));
+        else if (value < 9994999999L) return String.format("%.2f %s", (double)value/1000000000, getString(R.string.suffix_billion));
+        else if (value < 99949999999L) return String.format("%.1f %s", (double)value/1000000000, getString(R.string.suffix_billion));
+        else return String.format("%d %s", (value+500000000)/1000000000, getString(R.string.suffix_billion));
     }
 
     private void setIndexColor(TextView tv, int index) {
