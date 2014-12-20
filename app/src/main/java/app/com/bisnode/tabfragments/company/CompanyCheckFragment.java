@@ -172,6 +172,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         CustomJsonArrayRequest request = new CustomJsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                String currency = "";
                 try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject yearObject = response.getJSONObject(i);
@@ -180,12 +181,13 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
                         employeeCount.put(year, yearObject.optInt(getString(R.string.jsonFieldEmployeeCount)));
                         capital.put(year, yearObject.optLong(getString(R.string.jsonFieldCapital)));
                     }
-                    String currency = response.getJSONObject(0).optString(getString(R.string.jsonFieldCurrency));
+                    currency = response.getJSONObject(0).optString(getString(R.string.jsonFieldCurrency));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } finally {
                     displayTurnover(v, turnover, currency);
                     displayEmployees(v, employeeCount);
                     displayCapital(v, capital, currency);
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
@@ -199,6 +201,10 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
 
     private void displayTurnover(View v, TreeMap<Integer, Long> turnover, String currency) {
         LinearLayout block = (LinearLayout) v.findViewById(R.id.turnoverBlock);
+        if (turnover.size() < 1) {
+            block.setVisibility(View.GONE);
+            return;
+        }
         TextView[] years = new TextView[] {(TextView) block.findViewById(R.id.year1),
                 (TextView) block.findViewById(R.id.year2), (TextView) block.findViewById(R.id.year3)};
         TextView[] values = new TextView[] {(TextView) block.findViewById(R.id.value1),
@@ -223,9 +229,12 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         else if (ultimate < penultimate) trendArrow.setImageResource(R.drawable.ic_arrow_down);
     }
 
-
     private void displayEmployees(View v, TreeMap<Integer, Integer> employees) {
         LinearLayout block = (LinearLayout) v.findViewById(R.id.employeesBlock);
+        if (employees.size() < 1) {
+            block.setVisibility(View.GONE);
+            return;
+        }
         TextView[] years = new TextView[] {(TextView) block.findViewById(R.id.year1),
                 (TextView) block.findViewById(R.id.year2), (TextView) block.findViewById(R.id.year3)};
         TextView[] values = new TextView[] {(TextView) block.findViewById(R.id.value1),
@@ -252,6 +261,10 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
 
     private void displayCapital(View v, TreeMap<Integer, Long> capital, String currency) {
         LinearLayout block = (LinearLayout) v.findViewById(R.id.capitalBlock);
+        if (capital.size() < 1) {
+            block.setVisibility(View.GONE);
+            return;
+        }
         TextView[] years = new TextView[] {(TextView) block.findViewById(R.id.year1),
                 (TextView) block.findViewById(R.id.year2), (TextView) block.findViewById(R.id.year3)};
         TextView[] values = new TextView[] {(TextView) block.findViewById(R.id.value1),
