@@ -170,6 +170,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
                         capital.put(year, yearObject.optLong(getString(R.string.jsonFieldCapital)));
                     }
                     displayTurnover(v, turnover, response.getJSONObject(0).optString(getString(R.string.jsonFieldCurrency)));
+                    displayEmployees(v, employeeCount);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -212,6 +213,27 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         else if (value < 9994999999L) return String.format("%.2f %s", (double)value/1000000000, getString(R.string.suffix_billion));
         else if (value < 99949999999L) return String.format("%.1f %s", (double)value/1000000000, getString(R.string.suffix_billion));
         else return String.format("%d %s", (value+500000000)/1000000000, getString(R.string.suffix_billion));
+    }
+
+    private void displayEmployees(View v, TreeMap<Integer, Integer> employees) {
+        LinearLayout block = (LinearLayout) v.findViewById(R.id.employeesBlock);
+        TextView[] years = new TextView[] {(TextView) block.findViewById(R.id.year1),
+                (TextView) block.findViewById(R.id.year2), (TextView) block.findViewById(R.id.year3)};
+        TextView[] values = new TextView[] {(TextView) block.findViewById(R.id.value1),
+                (TextView) block.findViewById(R.id.value2), (TextView) block.findViewById(R.id.value3)};
+        int i = 2;  // last index
+        for (int y: employees.descendingKeySet()) {
+            years[i].setText(Integer.toString(y));
+            values[i].setText(Integer.toString(employees.get(y)));
+            i--;
+            if (i < 0) break;
+        }
+        TextView title = (TextView) block.findViewById(R.id.title_blockFour);
+        title.setText(R.string.employees_sectionTitle);
+        TextView yearLabel = (TextView) block.findViewById(R.id.label_year);
+        yearLabel.setText(R.string.labelYear);
+        TextView countLabel = (TextView) block.findViewById(R.id.label_value);
+        countLabel.setText(R.string.labelCount);
     }
 
     private void setIndexColor(TextView tv, int index) {

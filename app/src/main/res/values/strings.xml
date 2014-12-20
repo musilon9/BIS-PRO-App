@@ -42,6 +42,7 @@
     <string name="placeholderString">Placeholder</string>
     <string name="placeholderShort">XYZ</string>
     <string name="loadingString">Načítám data&#8230;</string>
+    <string name="unknown">neznámý</string>
     <string name="imageButtonDescription">Super ikonka</string>
 
     <string name="hello_world">Hello world!</string>
@@ -73,7 +74,7 @@
     <string name="labelSince">od roku</string>
     <string name="czechRepublic">Česká republika</string>
     <string name="labelYear">Rok</string>
-
+    <string name="labelCount">Rok</string>
 
     <!-- JSON Fields -->
     <string name="jsonFieldType">typeTxt</string>
