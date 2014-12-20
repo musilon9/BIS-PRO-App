@@ -247,7 +247,7 @@ public class ContactsFragment extends PlaceHolderFragment {
                             });
                         } else if (type.equals(getString(R.string.jsonContactWeb))) {
                             final String value = contact.optString(getString(R.string.jsonFieldValue));
-                            webView.setText(value.substring(3, value.length() - 1));
+                            webView.setText((value.substring(3, value.length() - 1)).replace("http://", ""));
                             webBlock.setVisibility(View.VISIBLE);
                             webIcon.setOnClickListener(new View.OnClickListener() {
                                 @Override

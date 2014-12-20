@@ -119,6 +119,9 @@
         <include layout="@layout/block_four_pieces"
             android:id="@+id/employeesBlock"/>
 
+        <include layout="@layout/block_four_pieces"
+            android:id="@+id/capitalBlock"/>
+
     </LinearLayout>
 
 </ScrollView>

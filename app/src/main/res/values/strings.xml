@@ -33,6 +33,7 @@
     <string name="indicators_sectionTitle">Indikátory</string>
     <string name="turnover_sectionTitle">Obrat firmy</string>
     <string name="employees_sectionTitle">Počet zaměstnanců</string>
+    <string name="capital_sectionTitle">Základní kapitál</string>
 
     <string name="loginHelp">Můžete se přihlásit pomocí Login: foo@example.com Password: hello</string>
     <string name="serverError">Nepodařilo se připojit k serveru. Prosím zkontrolujte připojení a zkuste akci zopakovat.</string>
@@ -43,6 +44,7 @@
     <string name="placeholderShort">XYZ</string>
     <string name="loadingString">Načítám data&#8230;</string>
     <string name="unknown">neznámý</string>
+    <string name="notAvailable">Není k dispozici</string>
     <string name="imageButtonDescription">Super ikonka</string>
 
     <string name="hello_world">Hello world!</string>
@@ -74,7 +76,7 @@
     <string name="labelSince">od roku</string>
     <string name="czechRepublic">Česká republika</string>
     <string name="labelYear">Rok</string>
-    <string name="labelCount">Rok</string>
+    <string name="labelCount">Počet</string>
 
     <!-- JSON Fields -->
     <string name="jsonFieldType">typeTxt</string>
@@ -89,6 +91,7 @@
     <string name="jsonFieldScoringDesc">bisnodeScoringDesc</string>
     <string name="jsonFieldPaymentIndex">paymentIndex</string>
     <string name="jsonFieldPaymentIndexDesc">paymentIndexLightDesc</string>
+    <string name="jsonFieldPaymentIndexCategory">paymentIndexCategory</string>
     <string name="jsonFieldNegInsolvence">insolvenceAktivni</string>
     <string name="jsonFieldNegInsolvenceHis">insolvenceHistoricke</string>
     <string name="jsonFieldNegLikvidace">likvidaceAktivni</string>

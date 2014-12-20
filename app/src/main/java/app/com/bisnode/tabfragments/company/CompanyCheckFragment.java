@@ -1,6 +1,7 @@
 package app.com.bisnode.tabfragments.company;
 
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -83,10 +84,20 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
                     JSONObject indicators = response.getJSONObject(0);
                     String scoringValue = indicators.optString(getString(R.string.jsonFieldScoringCode));
                     int indexValue = indicators.optInt(getString(R.string.jsonFieldPaymentIndex));
-                    scoring.setText(scoringValue);
-                    scoring.setTextColor(Color.parseColor(Scoring.valueOf(scoringValue).getColorCode()));
-                    scoringDesc.setText(indicators.optString(getString(R.string.jsonFieldScoringDesc)));
+                    if (scoringValue.equals("null")) {
+                        scoring.setTextColor(Color.parseColor(Scoring.NA.getColorCode()));
+                        scoring.setText("N/A");
+                        scoringDesc.setText(R.string.notAvailable);
+                    } else {
+                        scoring.setTextColor(Color.parseColor(Scoring.valueOf(scoringValue).getColorCode()));
+                        scoring.setText(scoringValue);
+                        scoringDesc.setText(indicators.optString(getString(R.string.jsonFieldScoringDesc)));
+                    }
                     paymentIndex.setText(Integer.toString(indexValue));
+                    if (indicators.optString(getString(R.string.jsonFieldPaymentIndexCategory)).equals("NA")) {
+                        paymentIndex.setText("N/A");
+                        indexValue = -999;
+                    }
                     setIndexColor(paymentIndex, indexValue);
                     indexDesc.setText(indicators.optString(getString(R.string.jsonFieldPaymentIndexDesc)));
                     checkNegativeIndicators(v, indicators);
@@ -169,8 +180,10 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
                         employeeCount.put(year, yearObject.optInt(getString(R.string.jsonFieldEmployeeCount)));
                         capital.put(year, yearObject.optLong(getString(R.string.jsonFieldCapital)));
                     }
-                    displayTurnover(v, turnover, response.getJSONObject(0).optString(getString(R.string.jsonFieldCurrency)));
+                    String currency = response.getJSONObject(0).optString(getString(R.string.jsonFieldCurrency));
+                    displayTurnover(v, turnover, currency);
                     displayEmployees(v, employeeCount);
+                    displayCapital(v, capital, currency);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -191,11 +204,13 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         TextView[] values = new TextView[] {(TextView) block.findViewById(R.id.value1),
                 (TextView) block.findViewById(R.id.value2), (TextView) block.findViewById(R.id.value3)};
         int i = 2;  // last index
+        long ultimate = 0, penultimate = 0;
         for (int y: turnover.descendingKeySet()) {
             years[i].setText(Integer.toString(y));
-            values[i].setText(readableTurnover(turnover.get(y)));
-            i--;
-            if (i < 0) break;
+            values[i].setText(readableAmount(turnover.get(y)));
+            if (i == 2) ultimate = turnover.get(y);
+            else if (i == 1) penultimate = turnover.get(y);
+            if (--i < 0) break;
         }
         TextView title = (TextView) block.findViewById(R.id.title_blockFour);
         title.setText(R.string.turnover_sectionTitle);
@@ -203,9 +218,65 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         yearLabel.setText(R.string.labelYear);
         TextView currencyLabel = (TextView) block.findViewById(R.id.label_value);
         currencyLabel.setText(currency);
+        ImageView trendArrow = (ImageView) block.findViewById(R.id.trendArrow);
+        if (ultimate > 0.95*penultimate && ultimate < 1.05*penultimate) trendArrow.setVisibility(View.INVISIBLE);
+        else if (ultimate < penultimate) trendArrow.setImageResource(R.drawable.ic_arrow_down);
     }
 
-    private String readableTurnover(long value) {
+
+    private void displayEmployees(View v, TreeMap<Integer, Integer> employees) {
+        LinearLayout block = (LinearLayout) v.findViewById(R.id.employeesBlock);
+        TextView[] years = new TextView[] {(TextView) block.findViewById(R.id.year1),
+                (TextView) block.findViewById(R.id.year2), (TextView) block.findViewById(R.id.year3)};
+        TextView[] values = new TextView[] {(TextView) block.findViewById(R.id.value1),
+                (TextView) block.findViewById(R.id.value2), (TextView) block.findViewById(R.id.value3)};
+        int i = 2;  // last index
+        int ultimate = 0, penultimate = 0;
+        for (int y: employees.descendingKeySet()) {
+            years[i].setText(Integer.toString(y));
+            values[i].setText(Integer.toString(employees.get(y)));
+            if (i == 2) ultimate = employees.get(y);
+            else if (i == 1) penultimate = employees.get(y);
+            if (--i < 0) break;
+        }
+        TextView title = (TextView) block.findViewById(R.id.title_blockFour);
+        title.setText(R.string.employees_sectionTitle);
+        TextView yearLabel = (TextView) block.findViewById(R.id.label_year);
+        yearLabel.setText(R.string.labelYear);
+        TextView countLabel = (TextView) block.findViewById(R.id.label_value);
+        countLabel.setVisibility(View.INVISIBLE);
+        ImageView trendArrow = (ImageView) block.findViewById(R.id.trendArrow);
+        if (ultimate > 0.95*penultimate && ultimate < 1.05*penultimate) trendArrow.setVisibility(View.INVISIBLE);
+        else if (ultimate < penultimate) trendArrow.setImageResource(R.drawable.ic_arrow_down);
+    }
+
+    private void displayCapital(View v, TreeMap<Integer, Long> capital, String currency) {
+        LinearLayout block = (LinearLayout) v.findViewById(R.id.capitalBlock);
+        TextView[] years = new TextView[] {(TextView) block.findViewById(R.id.year1),
+                (TextView) block.findViewById(R.id.year2), (TextView) block.findViewById(R.id.year3)};
+        TextView[] values = new TextView[] {(TextView) block.findViewById(R.id.value1),
+                (TextView) block.findViewById(R.id.value2), (TextView) block.findViewById(R.id.value3)};
+        int i = 2;  // last index
+        long ultimate = 0, penultimate = 0;
+        for (int y: capital.descendingKeySet()) {
+            years[i].setText(Integer.toString(y));
+            values[i].setText(readableAmount(capital.get(y)));
+            if (i == 2) ultimate = capital.get(y);
+            else if (i == 1) penultimate = capital.get(y);
+            if (--i < 0) break;
+        }
+        TextView title = (TextView) block.findViewById(R.id.title_blockFour);
+        title.setText(R.string.capital_sectionTitle);
+        TextView yearLabel = (TextView) block.findViewById(R.id.label_year);
+        yearLabel.setText(R.string.labelYear);
+        TextView currencyLabel = (TextView) block.findViewById(R.id.label_value);
+        currencyLabel.setText(currency);
+        ImageView trendArrow = (ImageView) block.findViewById(R.id.trendArrow);
+        if (ultimate > 0.95*penultimate && ultimate < 1.05*penultimate) trendArrow.setVisibility(View.INVISIBLE);
+        else if (ultimate < penultimate) trendArrow.setImageResource(R.drawable.ic_arrow_down);
+    }
+
+    private String readableAmount(long value) {
         if (value < 999499) return String.format("%d %s", (value+500)/1000, getString(R.string.suffix_thousand));
         else if (value < 9994999) return String.format("%.2f %s", (double)value/1000000, getString(R.string.suffix_million));
         else if (value < 99949999) return String.format("%.1f %s", (double)value/1000000, getString(R.string.suffix_million));
@@ -215,35 +286,10 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         else return String.format("%d %s", (value+500000000)/1000000000, getString(R.string.suffix_billion));
     }
 
-    private void displayEmployees(View v, TreeMap<Integer, Integer> employees) {
-        LinearLayout block = (LinearLayout) v.findViewById(R.id.employeesBlock);
-        TextView[] years = new TextView[] {(TextView) block.findViewById(R.id.year1),
-                (TextView) block.findViewById(R.id.year2), (TextView) block.findViewById(R.id.year3)};
-        TextView[] values = new TextView[] {(TextView) block.findViewById(R.id.value1),
-                (TextView) block.findViewById(R.id.value2), (TextView) block.findViewById(R.id.value3)};
-        int i = 2;  // last index
-        for (int y: employees.descendingKeySet()) {
-            years[i].setText(Integer.toString(y));
-            values[i].setText(Integer.toString(employees.get(y)));
-            i--;
-            if (i < 0) break;
-        }
-        TextView title = (TextView) block.findViewById(R.id.title_blockFour);
-        title.setText(R.string.employees_sectionTitle);
-        TextView yearLabel = (TextView) block.findViewById(R.id.label_year);
-        yearLabel.setText(R.string.labelYear);
-        TextView countLabel = (TextView) block.findViewById(R.id.label_value);
-        countLabel.setText(R.string.labelCount);
-    }
-
     private void setIndexColor(TextView tv, int index) {
-        if (index < 1) tv.setTextColor(Color.parseColor(Scoring.AA.getColorCode()));
-        else if (index < 5) tv.setTextColor(Color.parseColor(Scoring.A.getColorCode()));
-        else if (index < 11) tv.setTextColor(Color.parseColor(Scoring.BBB.getColorCode()));
-        else if (index < 21) tv.setTextColor(Color.parseColor(Scoring.BB.getColorCode()));
+        if (index < -100) tv.setTextColor(Color.parseColor(Scoring.NA.getColorCode()));
+        else if (index < 11) tv.setTextColor(Color.parseColor(Scoring.A.getColorCode()));
         else if (index < 31) tv.setTextColor(Color.parseColor(Scoring.B.getColorCode()));
-        else if (index < 61) tv.setTextColor(Color.parseColor(Scoring.CCC.getColorCode()));
-        else if (index < 91) tv.setTextColor(Color.parseColor(Scoring.C.getColorCode()));
         else if (index < 121) tv.setTextColor(Color.parseColor(Scoring.C.getColorCode()));
         else tv.setTextColor(Color.parseColor(Scoring.D.getColorCode()));
     }
