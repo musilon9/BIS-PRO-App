@@ -183,8 +183,9 @@ public class ContactsFragment extends PlaceHolderFragment {
                     JSONObject jsonAddress = response.getJSONObject(0);
                     final String value = jsonAddress.optString(getString(R.string.jsonFieldValue));
                     String[] lines = value.split(", ");
-                    String addressToDisplay = lines[0] + "\n" + lines[1] + ", " + lines[2];
-                    if (! lines[3].equals(getString(R.string.czechRepublic))) addressToDisplay += "\n" + lines[3];
+                    String addressToDisplay = lines[0] + "\n" + lines[1] + (lines.length > 3 ? ", " + lines[2] : "");
+                    if (! lines[lines.length - 1].equals(getString(R.string.czechRepublic)))
+                        addressToDisplay += "\n" + lines[lines.length - 1];
                     addressView.setText(addressToDisplay);
                     addressBlock.setVisibility(View.VISIBLE);
                     mapIcon.setOnClickListener(new View.OnClickListener() {

@@ -84,7 +84,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
                     JSONObject indicators = response.getJSONObject(0);
                     String scoringValue = indicators.optString(getString(R.string.jsonFieldScoringCode));
                     int indexValue = indicators.optInt(getString(R.string.jsonFieldPaymentIndex));
-                    if (scoringValue.equals("null")) {
+                    if (scoringValue.equals("null") || scoringValue.equals("N/A")) {
                         scoring.setTextColor(Color.parseColor(Scoring.NA.getColorCode()));
                         scoring.setText("N/A");
                         scoringDesc.setText(R.string.notAvailable);
@@ -201,7 +201,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
 
     private void displayTurnover(View v, TreeMap<Integer, Long> turnover, String currency) {
         LinearLayout block = (LinearLayout) v.findViewById(R.id.turnoverBlock);
-        if (turnover.size() < 1) {
+        if (turnover.size() < 1 || currency.equals("null")) {
             block.setVisibility(View.GONE);
             return;
         }
@@ -225,7 +225,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         TextView currencyLabel = (TextView) block.findViewById(R.id.label_value);
         currencyLabel.setText(currency);
         ImageView trendArrow = (ImageView) block.findViewById(R.id.trendArrow);
-        if (ultimate > 0.95*penultimate && ultimate < 1.05*penultimate) trendArrow.setVisibility(View.INVISIBLE);
+        if (ultimate >= 0.95*penultimate && ultimate <= 1.05*penultimate) trendArrow.setVisibility(View.INVISIBLE);
         else if (ultimate < penultimate) trendArrow.setImageResource(R.drawable.ic_arrow_down);
     }
 
@@ -243,7 +243,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         int ultimate = 0, penultimate = 0;
         for (int y: employees.descendingKeySet()) {
             years[i].setText(Integer.toString(y));
-            values[i].setText(Integer.toString(employees.get(y)));
+            values[i].setText(employees.get(y) > 0 ? Integer.toString(employees.get(y)) : getString(R.string.unknown));
             if (i == 2) ultimate = employees.get(y);
             else if (i == 1) penultimate = employees.get(y);
             if (--i < 0) break;
@@ -255,13 +255,13 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         TextView countLabel = (TextView) block.findViewById(R.id.label_value);
         countLabel.setVisibility(View.INVISIBLE);
         ImageView trendArrow = (ImageView) block.findViewById(R.id.trendArrow);
-        if (ultimate > 0.95*penultimate && ultimate < 1.05*penultimate) trendArrow.setVisibility(View.INVISIBLE);
+        if (ultimate >= 0.95*penultimate && ultimate <= 1.05*penultimate) trendArrow.setVisibility(View.INVISIBLE);
         else if (ultimate < penultimate) trendArrow.setImageResource(R.drawable.ic_arrow_down);
     }
 
     private void displayCapital(View v, TreeMap<Integer, Long> capital, String currency) {
         LinearLayout block = (LinearLayout) v.findViewById(R.id.capitalBlock);
-        if (capital.size() < 1) {
+        if (capital.size() < 1 || currency.equals("null")) {
             block.setVisibility(View.GONE);
             return;
         }
@@ -285,7 +285,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         TextView currencyLabel = (TextView) block.findViewById(R.id.label_value);
         currencyLabel.setText(currency);
         ImageView trendArrow = (ImageView) block.findViewById(R.id.trendArrow);
-        if (ultimate > 0.95*penultimate && ultimate < 1.05*penultimate) trendArrow.setVisibility(View.INVISIBLE);
+        if (ultimate >= 0.95*penultimate && ultimate <= 1.05*penultimate) trendArrow.setVisibility(View.INVISIBLE);
         else if (ultimate < penultimate) trendArrow.setImageResource(R.drawable.ic_arrow_down);
     }
 
