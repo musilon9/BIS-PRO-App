@@ -3,6 +3,7 @@ package app.com.bisnode.tabfragments.main;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -71,7 +72,7 @@ public class SearchFragment extends PlaceHolderFragment {
             {
                 RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-                String url = getString(R.string.requestSearch) + queryField.getText();
+                String url = getString(R.string.requestSearch) + Uri.encode(queryField.getText().toString());
 
                 CustomJsonArrayRequest jsObjRequest = new CustomJsonArrayRequest
                         (url, new Response.Listener<JSONArray>() {
@@ -97,14 +98,11 @@ public class SearchFragment extends PlaceHolderFragment {
                                 expListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        Intent showCompany = null;
                                         CompanyModel selectedCompany = (CompanyModel) parent.getItemAtPosition(position);
-                                        if (selectedCompany.getName().equals("MADETA a. s.") || true) {
-                                            showCompany = new Intent(getActivity(), CompanyActivity.class);
-                                            showCompany.putExtra("id", selectedCompany.getId());
-                                            showCompany.putExtra("name", selectedCompany.getName());
-                                        }
-                                        if (showCompany != null) startActivity(showCompany);
+                                        Intent showCompany = new Intent(getActivity(), CompanyActivity.class);
+                                        showCompany.putExtra("id", selectedCompany.getId());
+                                        showCompany.putExtra("name", selectedCompany.getName());
+                                        startActivity(showCompany);
                                     }
                                 });
                             }

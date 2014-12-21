@@ -191,7 +191,7 @@ public class ContactsFragment extends PlaceHolderFragment {
                     mapIcon.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            String uri = "http://maps.google.com/maps?daddr=" + value;
+                            String uri = "http://maps.google.com/maps?daddr=" + Uri.encode(value);
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                             getActivity().startActivity(intent);
                         }
