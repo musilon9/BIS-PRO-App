@@ -213,7 +213,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         long ultimate = 0, penultimate = 0;
         for (int y: turnover.descendingKeySet()) {
             years[i].setText(Integer.toString(y));
-            values[i].setText(readableAmount(turnover.get(y)));
+            values[i].setText(turnover.get(y) > 0 ? readableAmount(turnover.get(y)) : getString(R.string.unknown));
             if (i == 2) ultimate = turnover.get(y);
             else if (i == 1) penultimate = turnover.get(y);
             if (--i < 0) break;
@@ -273,7 +273,7 @@ public class CompanyCheckFragment extends PlaceHolderFragment {
         long ultimate = 0, penultimate = 0;
         for (int y: capital.descendingKeySet()) {
             years[i].setText(Integer.toString(y));
-            values[i].setText(readableAmount(capital.get(y)));
+            values[i].setText(capital.get(y) > 0 ? readableAmount(capital.get(y)) : getString(R.string.unknown));
             if (i == 2) ultimate = capital.get(y);
             else if (i == 1) penultimate = capital.get(y);
             if (--i < 0) break;
