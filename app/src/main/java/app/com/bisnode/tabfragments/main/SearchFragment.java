@@ -1,11 +1,9 @@
 package app.com.bisnode.tabfragments.main;
 
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +14,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -29,11 +24,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import app.com.bisnode.AppController;
 import app.com.bisnode.CompanyActivity;
 import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
@@ -103,8 +95,10 @@ public class SearchFragment extends PlaceHolderFragment {
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         CompanyModel selectedCompany = (CompanyModel) parent.getItemAtPosition(position);
                                         Intent showCompany = new Intent(getActivity(), CompanyActivity.class);
-                                        showCompany.putExtra("id", selectedCompany.getId());
+                                        showCompany.putExtra("id", selectedCompany.getApiId());
                                         showCompany.putExtra("name", selectedCompany.getName());
+                                        showCompany.putExtra("icon", selectedCompany.getIcon());
+                                        showCompany.putExtra("location", selectedCompany.getLocation());
                                         startActivity(showCompany);
                                     }
                                 });
