@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 import app.com.bisnode.R;
@@ -30,38 +32,36 @@ import app.com.bisnode.tabfragments.main.SearchFragment;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View rootView = inflater.inflate(R.layout.filter_dialog, null);
-        ImageButton button = (ImageButton) rootView.findViewById(R.id.company_button);
-        button.setClickable(true);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchFragment.performFiltering(String.valueOf(R.drawable.ic_company));
-            }
-        });
 
-        ImageButton button2 = (ImageButton) rootView.findViewById(R.id.person_button);
-        button2.setClickable(true);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchFragment.performFiltering(String.valueOf(R.drawable.ic_person));
-            }
-        });
+        final CheckBox button = (CheckBox) rootView.findViewById(R.id.checkBox);
+        final CheckBox button2 = (CheckBox) rootView.findViewById(R.id.checkBox2);
+        final CheckBox button3 = (CheckBox) rootView.findViewById(R.id.checkBox3);
 
-        ImageButton button3 = (ImageButton) rootView.findViewById(R.id.private_person_button);
-        button3.setClickable(true);
-        button3.setOnClickListener(new View.OnClickListener() {
+        final AlertDialog alertDialog = builder.create();
+
+        Button button_apply = (Button) rootView.findViewById(R.id.button_apply);
+        button_apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchFragment.performFiltering(String.valueOf(R.drawable.ic_ent_person));
+                String filter = "";
+                if(button.isChecked()) {
+                    filter+= String.valueOf(R.drawable.ic_company + ":");
+                }
+                if(button2.isChecked()) {
+                    filter+= String.valueOf(R.drawable.ic_person + ":");
+                }
+                if(button3.isChecked()) {
+                    filter+= String.valueOf(R.drawable.ic_ent_person + ":");
+                }
+                searchFragment.performFiltering(filter);
             }
         });
         builder.setView(rootView);
 
-        return builder.create();
+        return alertDialog;
     }
 
     public void setSearchFragment(SearchFragment searchFragment) {

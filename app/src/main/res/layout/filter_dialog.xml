@@ -14,31 +14,36 @@
         android:layout_weight="0.15"
         android:layout_height="0dp" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="Podle firmy"
+        android:id="@+id/checkBox"
+        android:layout_weight="0.15"
+        android:checked="true" />
 
-        <ImageButton
-            android:id="@+id/company_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_company"
-            />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="Podle osoby"
+        android:id="@+id/checkBox2"
+        android:layout_weight="0.15"
+        android:checked="true" />
 
-        <ImageButton
-            android:id="@+id/private_person_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_ent_person"
-            android:layout_gravity="center_horizontal" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="Podle soukromé osoby"
+        android:id="@+id/checkBox3"
+        android:layout_weight="0.15"
+        android:checked="true" />
 
-        <ImageButton
-            android:id="@+id/person_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_person"
-            />
-    </LinearLayout>
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="Aplikuj filtr"
+        android:id="@+id/button_apply"
+        android:layout_weight="0.15" />
 
 </LinearLayout>

@@ -54,7 +54,7 @@ public class SearchAdapter extends ArrayAdapter<CompanyModel> implements Filtera
         protected FilterResults performFiltering(CharSequence constraint) {
 
             String filterString = constraint.toString().toLowerCase();
-
+            String[] filters = filterString.split(":");
             FilterResults results = new FilterResults();
 
             final List<CompanyModel> list = items;
@@ -66,8 +66,10 @@ public class SearchAdapter extends ArrayAdapter<CompanyModel> implements Filtera
 
             for (int i = 0; i < count; i++) {
                 companyModel = list.get(i);
-                if (String.valueOf(companyModel.getIcon()).equals(filterString)) {
-                    nlist.add(companyModel);
+                for(String filter : filters) {
+                    if (String.valueOf(companyModel.getIcon()).equals(filter)) {
+                        nlist.add(companyModel);
+                    }
                 }
             }
 
