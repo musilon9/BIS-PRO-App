@@ -116,5 +116,7 @@
     <string name="suffix_thousand">tis.</string>
     <string name="suffix_million">mil.</string>
     <string name="suffix_billion">mld.</string>
+    <string name="action_search">filter</string>
+    <string name="filtering">Filtrování</string>
 
 </resources>

@@ -48,6 +48,8 @@ public class SearchFragment extends PlaceHolderFragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
+    private View rootView;
+
     public static SearchFragment newInstance(int sectionNumber) {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
@@ -63,6 +65,7 @@ public class SearchFragment extends PlaceHolderFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+        this.rootView = rootView;
         Button button = (Button) rootView.findViewById(R.id.searchButton);
         final EditText queryField = (EditText) rootView.findViewById(R.id.searchField);
         button.setOnClickListener(new View.OnClickListener()
@@ -119,6 +122,11 @@ public class SearchFragment extends PlaceHolderFragment {
             }
         });
         return rootView;
+    }
+
+    public void performFiltering(String type) {
+        ListView expListView = (ListView) rootView.findViewById(R.id.listView);
+        ((SearchAdapter)expListView.getAdapter()).getFilter().filter(type);
     }
 
     private int getIconForType(String type) {

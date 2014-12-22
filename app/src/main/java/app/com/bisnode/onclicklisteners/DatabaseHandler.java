@@ -22,6 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickLis
     private static final String FAVOURITE_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS FAVOURITES ("
         + "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"      // TODO use ID from API, data type LONG!
         + "icon           INTEGER    ,"
+        + "api_id         LONG         NOT NULL,"
         + "name           CHAR(50)     NOT NULL,"
         + "location        CHAR(50)  NOT NULL,"
         + "history           INTEGER     NOT NULL"
@@ -47,6 +48,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickLis
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(FAVOURITE_TABLE_CREATE);
+        db.close();
     }
 
     public List<CompanyModel> getHistory() {
@@ -69,6 +71,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickLis
         values.put(KEY_LOCATION, company.getCity());
         values.put(KEY_HISTORY, 0);
         getWritableDatabase().insert("FAVOURITES", null, values);
+        getWritableDatabase().close();
     }
 
     public List<CompanyModel> getData(String where) {
@@ -87,11 +90,16 @@ public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickLis
                 cursor.moveToNext();
             }
         }
+        if(cursor != null) {
+            cursor.close();
+        }
+        db.close();
         return companyModels;
     }
 
     public void deleteCompany(long companyId) {
         getWritableDatabase().delete("FAVOURITES", "ID = "+companyId, null);
+        getWritableDatabase().close();
     }
 
     public void insertCompanyAsHistory(Company company) {
@@ -100,5 +108,6 @@ public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickLis
         values.put(KEY_LOCATION, company.getCity());
         values.put(KEY_HISTORY, 1);
         getWritableDatabase().insert("FAVOURITES", null, values);
+        getWritableDatabase().close();
     }
 }

@@ -4,8 +4,10 @@ package app.com.bisnode;
 import java.util.Locale;
 
 import android.app.ActionBar;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -15,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+import app.com.bisnode.dialogs.FilterDialog;
 import app.com.bisnode.tabfragments.main.FavoritesFragment;
 import app.com.bisnode.tabfragments.main.HistoryFragment;
 import app.com.bisnode.tabfragments.main.SearchFragment;
@@ -39,6 +42,8 @@ public class MainActivity extends FragmentActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    private int mStackLevel = 4;
+    private Fragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,8 +140,26 @@ public class MainActivity extends FragmentActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if(id == R.id.action_search) {
+            openFilter();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openFilter() {
+        mStackLevel++;
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        FilterDialog newFragment = FilterDialog.newInstance(mStackLevel, (SearchFragment)searchFragment);
+        newFragment.show(ft, "dialog");
     }
 
 
@@ -156,6 +179,7 @@ public class MainActivity extends FragmentActivity {
             switch (position) {
                 case 0:
                     actualFragment = SearchFragment.newInstance(position + 1);
+                    searchFragment = actualFragment;
                     break;
                 case 1:
                     actualFragment = HistoryFragment.newInstance(position + 1);
