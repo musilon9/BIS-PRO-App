@@ -44,8 +44,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-    private static final String PREFS_NAME = "file";
-    private static final String LOGGED_PERMANENTLY = "loggedPermanently";
+    public static final String PREFS_NAME = "file";
+    public static final String LOGGED_PERMANENTLY = "loggedPermanently";
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */

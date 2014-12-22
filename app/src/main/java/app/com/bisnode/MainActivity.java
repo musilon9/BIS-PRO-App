@@ -8,6 +8,8 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -138,7 +140,7 @@ public class MainActivity extends FragmentActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            logout();
         }
         if(id == R.id.action_search) {
             openFilter();
@@ -146,6 +148,16 @@ public class MainActivity extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(LoginActivity.LOGGED_PERMANENTLY, false);
+        editor.apply();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void openFilter() {
