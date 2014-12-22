@@ -26,6 +26,8 @@ public class FavoritesAdapter extends ArrayAdapter<CompanyModel> {
             rowView = LayoutInflater.from(this.getContext()).inflate(R.layout.list_item_favorites, null);
         }
         final CompanyModel companyModel = getItem(position);
+        ImageView icon = (ImageView) rowView.findViewById(R.id.item_icon_com);
+        icon.setImageResource(companyModel.getIcon());
         TextView title = (TextView) rowView.findViewById(R.id.item_title);
         TextView location = (TextView) rowView.findViewById(R.id.item_location);
         title.setText(companyModel.getName());

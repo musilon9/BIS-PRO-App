@@ -22,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import app.com.bisnode.R;
-import app.com.bisnode.objects.Company;
+import app.com.bisnode.adapters.CompanyModel;
 import app.com.bisnode.onclicklisteners.DatabaseHandler;
 import app.com.bisnode.requests.CustomJsonArrayRequest;
 import app.com.bisnode.tabfragments.PlaceHolderFragment;
@@ -47,6 +47,7 @@ public class ContactsFragment extends PlaceHolderFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
+        appendFavouriteListener(rootView);
         displayContents(rootView);
         return rootView;
     }
@@ -272,9 +273,11 @@ public class ContactsFragment extends PlaceHolderFragment {
         queue.add(request);
     }
 
-    public void setListeners(Company com, View rootView) {
+    public void appendFavouriteListener(View rootView) {
         ImageButton imageView = (ImageButton) rootView.findViewById(R.id.mapIcon);
         imageView.setClickable(true);
+        Bundle bundle = getActivity().getIntent().getExtras();
+        CompanyModel com = new CompanyModel(bundle.getLong("id"), bundle.getInt("icon"), bundle.getString("name"), bundle.getString("location"));
         DatabaseHandler databaseHandler = new DatabaseHandler(this.getActivity().getApplicationContext(), com);
         imageView.setOnClickListener(databaseHandler);
         databaseHandler.insertCompanyAsHistory(com);

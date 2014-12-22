@@ -29,6 +29,7 @@ public class Company {
     private Scoring scoring;
     private int paymentIndex;
     private ArrayList<NegativeIndicator> negatives;
+    private long id;
 
     // -------------- CONSTRUCTORS ----------------
 
@@ -129,5 +130,9 @@ public class Company {
 
     public ArrayList<NegativeIndicator> getNegatives() {
         return negatives;
+    }
+
+    public long getId() {
+        return id;
     }
 }
