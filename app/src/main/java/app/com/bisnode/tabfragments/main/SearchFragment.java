@@ -99,6 +99,7 @@ public class SearchFragment extends PlaceHolderFragment {
                                         showCompany.putExtra("name", selectedCompany.getName());
                                         showCompany.putExtra("icon", selectedCompany.getIcon());
                                         showCompany.putExtra("location", selectedCompany.getLocation());
+                                        showCompany.putExtra("is_company", selectedCompany.getIcon() == R.drawable.ic_company);
                                         startActivity(showCompany);
                                     }
                                 });

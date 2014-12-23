@@ -274,12 +274,13 @@ public class ContactsFragment extends PlaceHolderFragment {
     }
 
     public void appendFavouriteListener(View rootView) {
-        ImageButton imageView = (ImageButton) rootView.findViewById(R.id.mapIcon);
+        ImageButton imageView = (ImageButton) rootView.findViewById(R.id.favoriteIcon);
         imageView.setClickable(true);
         Bundle bundle = getActivity().getIntent().getExtras();
         CompanyModel com = new CompanyModel(bundle.getLong("id"), bundle.getInt("icon"), bundle.getString("name"), bundle.getString("location"));
         DatabaseHandler databaseHandler = new DatabaseHandler(this.getActivity().getApplicationContext(), com);
         imageView.setOnClickListener(databaseHandler);
+        if (databaseHandler.isInFavourites(bundle.getLong("id"))) imageView.setImageResource(R.drawable.ic_favorite_on);
         databaseHandler.insertCompanyAsHistory(com);
     }
 }

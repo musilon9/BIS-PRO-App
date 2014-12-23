@@ -48,7 +48,6 @@ public class CompanyActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setTitle(FakeSearch.getExample().getName());
         setTitle(getIntent().getStringExtra("name"));
 
         // Create the adapter that will return a fragment for each of the three
@@ -82,7 +81,7 @@ public class CompanyActivity extends FragmentActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Add 3 tabs, specifying the tab's text and TabListener
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < adapter.getCount(); i++) {
             actionBar.addTab(
                     actionBar.newTab()
                             .setText(adapter.getPageTitle(i))
@@ -111,7 +110,7 @@ public class CompanyActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_company, menu);
         return true;
     }
 
@@ -166,8 +165,9 @@ public class CompanyActivity extends FragmentActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 3 total pages for company and 1 for person
+            if (getIntent().getBooleanExtra("is_company", false)) return 3;
+            else return 1;
         }
 
         @Override

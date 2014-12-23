@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Bisnode</string>
+    <string name="app_name">Gnosus</string>
 
     <!-- Fragment names -->
     <string name="search">Hledání</string>
@@ -11,7 +11,7 @@
     <string name="contacts">Kontakty</string>
     <string name="activities">Činnost</string>
     <string name="management">Vedení</string>
-    <string name="detail_info">Detaily</string>
+    <string name="detail_info">Osoby</string>
     <string name="check_company">Prověřit</string>
 
 

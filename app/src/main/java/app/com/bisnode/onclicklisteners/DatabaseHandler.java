@@ -8,10 +8,12 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.view.View;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.com.bisnode.R;
 import app.com.bisnode.adapters.CompanyModel;
 
 public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickListener  {
@@ -80,6 +82,8 @@ public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickLis
                 e.printStackTrace();
             }
         }
+        ImageButton favicon = (ImageButton)v.findViewById(R.id.favoriteIcon);
+        favicon.setImageResource(R.drawable.ic_favorite_on);
     }
 
     public List<CompanyModel> getData(String where) {
