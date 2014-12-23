@@ -120,7 +120,11 @@ public class SearchFragment extends PlaceHolderFragment {
 
     public void performFiltering(String type) {
         ListView expListView = (ListView) rootView.findViewById(R.id.listView);
-        ((SearchAdapter)expListView.getAdapter()).getFilter().filter(type);
+        if(expListView.getAdapter() == null) {
+            Toast.makeText(getActivity(), getString(R.string.filter_error), Toast.LENGTH_LONG).show();
+        } else {
+            ((SearchAdapter)expListView.getAdapter()).getFilter().filter(type);
+        }
     }
 
     private int getIconForType(String type) {

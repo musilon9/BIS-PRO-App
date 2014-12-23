@@ -40,8 +40,6 @@ import app.com.bisnode.tabfragments.main.SearchFragment;
         final CheckBox button2 = (CheckBox) rootView.findViewById(R.id.checkBox2);
         final CheckBox button3 = (CheckBox) rootView.findViewById(R.id.checkBox3);
 
-        final AlertDialog alertDialog = builder.create();
-
         Button button_apply = (Button) rootView.findViewById(R.id.button_apply);
         button_apply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +59,7 @@ import app.com.bisnode.tabfragments.main.SearchFragment;
         });
         builder.setView(rootView);
 
-        return alertDialog;
+        return builder.create();
     }
 
     public void setSearchFragment(SearchFragment searchFragment) {
