@@ -123,6 +123,16 @@ public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickLis
         }
     }
 
+    public boolean isInFavourites(long api_id) {
+        List<CompanyModel> favourites = getData(" = 0");
+        for(CompanyModel model : favourites) {
+            if(model.getApiId() == api_id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean tryFindMatch(CompanyModel company, String where) {
         boolean match = false;
         List<CompanyModel> list = getData(where);
