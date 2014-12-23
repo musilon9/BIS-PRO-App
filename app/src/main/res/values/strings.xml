@@ -37,7 +37,7 @@
 
     <string name="loginHelp">Můžete se přihlásit pomocí Login: foo@example.com Password: hello</string>
     <string name="serverError">Nepodařilo se připojit k serveru. Prosím zkontrolujte připojení a zkuste akci zopakovat.</string>
-    <string name="filter_error">Filtrovaný seznam je prádný</string>
+    <string name="filter_error">Filtrovaný seznam je prázdný</string>
 
 
     <string name="dummyLogin">foo@example.com</string>
