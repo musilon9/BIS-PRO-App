@@ -1,7 +1,6 @@
 package app.com.bisnode.tabfragments.company;
 
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,12 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.TreeMap;
 
 import app.com.bisnode.R;
-import app.com.bisnode.fakedata.FakeSearch;
-import app.com.bisnode.objects.Company;
 import app.com.bisnode.objects.Scoring;
 import app.com.bisnode.requests.CustomJsonArrayRequest;
 import app.com.bisnode.tabfragments.PlaceHolderFragment;

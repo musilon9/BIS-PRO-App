@@ -55,7 +55,7 @@ public class ContactsFragment extends PlaceHolderFragment {
     private void displayContents(View v) {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         displayRegistrationInfo(v, queue);
-        displayAdress(v, queue);
+        displayAddress(v, queue);
         displayContacts(v, queue);
     }
 
@@ -70,7 +70,7 @@ public class ContactsFragment extends PlaceHolderFragment {
         requestCompanyType(companyType, companyDPH, queue);
     }
 
-    private void displayAdress(View rootView, RequestQueue queue) {
+    private void displayAddress(View rootView, RequestQueue queue) {
         LinearLayout block = (LinearLayout) rootView.findViewById(R.id.addressBlock);
         TextView title = (TextView) block.findViewById(R.id.title_blockContact);
         title.setText(getString(R.string.address_sectionTitle));
