@@ -66,16 +66,19 @@ public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        ContentValues values = new ContentValues();
-        values.put(KEY_API_ID, company.getApiId());
-        values.put(KEY_NAME, company.getName());
-        values.put(KEY_ICON, company.getIcon());
-        values.put(KEY_LOCATION, company.getLocation());
-        values.put(KEY_HISTORY, 0);
-        try {
-            getWritableDatabase().insert("FAVOURITES", null, values);
-        } catch (SQLiteConstraintException e) {
-            e.printStackTrace();
+        boolean match = tryFindMatch(company, " = 0");
+        if(!match) {
+            ContentValues values = new ContentValues();
+            values.put(KEY_API_ID, company.getApiId());
+            values.put(KEY_NAME, company.getName());
+            values.put(KEY_ICON, company.getIcon());
+            values.put(KEY_LOCATION, company.getLocation());
+            values.put(KEY_HISTORY, 0);
+            try {
+                getWritableDatabase().insert("FAVOURITES", null, values);
+            } catch (SQLiteConstraintException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -104,16 +107,32 @@ public class DatabaseHandler extends SQLiteOpenHelper implements View.OnClickLis
     }
 
     public void deleteCompany(long companyId) {
-        getWritableDatabase().delete("FAVOURITES", "ID = "+companyId, null);
+        getWritableDatabase().delete("FAVOURITES", "ID = " + companyId, null);
     }
 
     public void insertCompanyAsHistory(CompanyModel company) {
-        ContentValues values = new ContentValues();
-        values.put(KEY_API_ID, company.getApiId());
-        values.put(KEY_NAME, company.getName());
-        values.put(KEY_ICON, company.getIcon());
-        values.put(KEY_LOCATION, company.getLocation());
-        values.put(KEY_HISTORY, 1);
-        getWritableDatabase().insert("FAVOURITES", null, values);
+        boolean match = tryFindMatch(company, " = 1");
+        if(!match) {
+            ContentValues values = new ContentValues();
+            values.put(KEY_API_ID, company.getApiId());
+            values.put(KEY_NAME, company.getName());
+            values.put(KEY_ICON, company.getIcon());
+            values.put(KEY_LOCATION, company.getLocation());
+            values.put(KEY_HISTORY, 1);
+            getWritableDatabase().insert("FAVOURITES", null, values);
+        }
+    }
+
+    private boolean tryFindMatch(CompanyModel company, String where) {
+        boolean match = false;
+        List<CompanyModel> list = getData(where);
+        for(CompanyModel companyModel : list) {
+            if(company.getName().equals(companyModel.getName()) &&
+                    company.getLocation().equals(companyModel.getLocation())) {
+                match = true;
+                break;
+            }
+        }
+        return match;
     }
 }
