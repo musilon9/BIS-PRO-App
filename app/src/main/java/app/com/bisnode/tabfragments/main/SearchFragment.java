@@ -1,12 +1,14 @@
 package app.com.bisnode.tabfragments.main;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.com.bisnode.CompanyActivity;
+import app.com.bisnode.MainActivity;
 import app.com.bisnode.MyApplication;
 import app.com.bisnode.R;
 import app.com.bisnode.adapters.CompanyModel;
@@ -65,6 +68,9 @@ public class SearchFragment extends PlaceHolderFragment {
             @Override
             public void onClick(View v)
             {
+                InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                mgr.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+
                 RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
                 String url = getString(R.string.requestSearch) + Uri.encode(queryField.getText().toString());

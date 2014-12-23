@@ -54,7 +54,9 @@ import app.com.bisnode.tabfragments.main.SearchFragment;
                 if(button3.isChecked()) {
                     filter+= String.valueOf(R.drawable.ic_ent_person + ":");
                 }
-                searchFragment.performFiltering(filter);
+                if(searchFragment != null) {
+                    searchFragment.performFiltering(filter);
+                }
             }
         });
         builder.setView(rootView);
